@@ -95,8 +95,7 @@ namespace CombatForms
         }
         public State GetState()
         {
-
-            return;
+            return states[currentState.Name];
         }
     }
 }
