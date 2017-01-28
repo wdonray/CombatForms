@@ -17,15 +17,9 @@ namespace CombatForms
         {
             states = new Dictionary<string, State>(); //Ability to know when this happens
             transitions = new Dictionary<string, List<State>>();
-            //var values = Enum.GetValues(typeof(T));
-            //foreach(var v in values)
-            //{
-            //    State s = new State(v as Enum);
-            //    states.Add(s.Name, s);
-            //}
         }
         /// <summary>
-        /// 
+        /// Creates a state and adds a key and value to it
         /// </summary>
         /// <param name="e"></param>
         public void AddState(Enum e)
@@ -70,7 +64,7 @@ namespace CombatForms
             string newState = (state as Enum).ToString();
             if (transitions.ContainsKey(key) == false)
             {
-                Console.WriteLine("Invalid " + key);
+                Console.WriteLine("Invalid Transition " + key);
                 return;
             }
             if (currentState.onExit != null)
@@ -79,10 +73,7 @@ namespace CombatForms
             }
             currentState = states[newState];
             if (currentState.onEnter != null)
-            {
                 currentState.onEnter.Invoke();
-            }
-
         }
         /// <summary>
         /// 
@@ -93,6 +84,10 @@ namespace CombatForms
         {
             return states[(e as Enum).ToString()];
         }
+        /// <summary>
+        /// Used to return the current states name
+        /// </summary>
+        /// <returns></returns>
         public State GetState()
         {
             return states[currentState.Name];

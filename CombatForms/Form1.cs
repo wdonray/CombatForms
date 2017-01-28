@@ -40,7 +40,7 @@ namespace CombatForms
             FSM.Start(Light.INIT);
             Console.WriteLine("Current State:" + FSM.GetState().Name);
             //FSM.GetState(Light.INIT).AddEnter((Callback)Start);
-            //FSM.GetState(Light.RED).AddEnter((Callback)Start);
+            FSM.GetState(Light.RED).AddEnter((Callback)Start);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -49,7 +49,8 @@ namespace CombatForms
         private void button1_Click(object sender, EventArgs e)
         {
             FSM.ChangeState(Light.RED);
-            Console.WriteLine("Current State:" + FSM.GetState().Name);
+            // Console.WriteLine("Current State:" + FSM.GetState().Name);
+            
         }
         private void button2_Click(object sender, EventArgs e)
         {
