@@ -42,25 +42,34 @@ namespace CombatForms
             //FSM.GetState(Light.INIT).AddEnter((Callback)Start);
             FSM.GetState(Light.RED).AddEnter((Callback)Start);
         }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
+        private void Form1_Load(object sender, EventArgs e) { }
         private void button1_Click(object sender, EventArgs e)
         {
             FSM.ChangeState(Light.RED);
-            // Console.WriteLine("Current State:" + FSM.GetState().Name);
-            
+            richTextBox1.Text = "Current State:" + FSM.GetState().Name;
         }
         private void button2_Click(object sender, EventArgs e)
         {
             FSM.ChangeState(Light.GREEN);
-            Console.WriteLine("Current State:" + FSM.GetState().Name);
+            richTextBox1.Text = "Current State:" + FSM.GetState().Name;
         }
         private void button3_Click(object sender, EventArgs e)
         {
             FSM.ChangeState(Light.YELLOW);
-            Console.WriteLine("Current State:" + FSM.GetState().Name);
+            richTextBox1.Text = "Current State:" + FSM.GetState().Name;
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e) { }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            DataManager<FiniteStateMachine<Light>>.Serialize("Test", FSM.GetState().Name);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            FSM = DataManager<FiniteStateMachine<Light>>.Deserialize("Test");
+            this.richTextBox1.Text = "Current State:" + FSM.GetState().Name;
         }
     }
 }
