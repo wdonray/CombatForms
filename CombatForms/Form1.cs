@@ -63,7 +63,7 @@ namespace CombatForms
 
         private void button4_Click(object sender, EventArgs e)
         {
-            DataManager<FiniteStateMachine<Light>>.Serialize("Test", FSM.GetState().Name);
+            DataManager<FiniteStateMachine<Light>>.Serialize("Test", FSM);
         }
 
         private void button5_Click(object sender, EventArgs e)

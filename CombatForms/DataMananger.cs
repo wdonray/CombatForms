@@ -10,7 +10,7 @@ namespace CombatForms
 {
     static class DataManager<T>
     {
-        public static void Serialize(string filename,  T data)
+        public static void Serialize(string filename, T data)
         {
             XmlSerializer serilaizer = new XmlSerializer(typeof(T));
             if (!File.Exists(@"..\..\" + filename + ".xml"))
