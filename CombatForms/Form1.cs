@@ -12,6 +12,13 @@ namespace CombatForms
 {
     public partial class Form1 : Form
     {
+        //Entity Player = new Entity(100);
+        //Entity Enemy = new Entity(100);
+        //bool defend = false;
+        //Random flee = new Random();
+        Combat active = new Combat();
+        public delegate void Callback();
+        FiniteStateMachine<GameStart> FSM;
         public enum GameStart
         {
             INIT = 0,
@@ -19,15 +26,24 @@ namespace CombatForms
             ENDTURN = 2,
             DEFEND = 3,
             FLEE = 4,
-
         }
-        public delegate void Callback();
-        FiniteStateMachine<GameStart> FSM;
-        public void Start() { }
-        public void Exit() { }
+        Party a = new Party();
+        Party b = new Party();
+        Entity cl = new Entity(100, "Cloud", true);
+        Entity ae = new Entity(50, "Aeris the Archer", true);
+        Entity ds = new Entity(100, "Dwarf Soilder", true);
+        Entity da = new Entity(50, "Dwark Archer", true);
         public Form1()
         {
             InitializeComponent();
+
+            active.AddParty(a);
+            active.AddParty(b);
+            active.AddPlaya(cl, 1);
+            active.AddPlaya(ae, 1);
+            active.AddPlaya(ds, 2);
+            active.AddPlaya(da, 2);
+
             FSM = new FiniteStateMachine<GameStart>();
             FSM.AddState(GameStart.INIT);
             FSM.AddState(GameStart.ATTACK);
@@ -48,29 +64,74 @@ namespace CombatForms
             FSM.AddTransition(GameStart.ENDTURN, GameStart.FLEE);
 
             FSM.Start(GameStart.INIT);
-            richTextBox1.Text = "Current State:" + FSM.GetState().Name;
+            richTextBox1.Text += "Current State:" + FSM.GetState().Name;
+            richTextBox1.Text += "\nActive Entity: " + active.activeParty.activePlaya.Name;
         }
         private void Form1_Load(object sender, EventArgs e) { }
         private void richTextBox1_TextChanged(object sender, EventArgs e) { }
         private void Attack_Click(object sender, EventArgs e)
         {
             FSM.ChangeState(GameStart.ATTACK);
-            richTextBox1.Text = "You Chose to:" + FSM.GetState().Name;
+            richTextBox1.Text = active.activeParty.activePlaya.Name + " Chose to: " + FSM.GetState().Name + "\n";
+            if (active.activeParty.activePlaya.Name == "Cloud")
+                cl.DoDamage(ds);
+            else if (active.activeParty.activePlaya.Name == "Cloud" && ds.Health <= 0)
+                cl.DoDamage(ds);
+            else if (active.activeParty.activePlaya.Name == "Aeris the Archer")
+            {
+                ae.DoDamage(da);
+                ae.DoDamage(ds);
+            }
+            else if (active.activeParty.activePlaya.Name == "Dwarf Soilder")
+                ds.DoDamage(cl);
+            else if (active.activeParty.activePlaya.Name == "Dwarf Soilder" && cl.Health <= 0)
+                ds.DoDamage(ae);
+            else if (active.activeParty.activePlaya.Name == "Dwarf Archer")
+            {
+                da.DoDamage(ae);
+                da.DoDamage(cl);
+            }
+            if (cl.alive == true)
+                richTextBox1.Text += cl.Name + " remaining hp: " + cl.Health + "\n";
+            if (ae.alive == true)
+                richTextBox1.Text += ae.Name + " remaining hp: " + ae.Health + "\n";
+            if (ds.alive == true)
+                richTextBox1.Text += ds.Name + " remaining hp: " + ds.Health + "\n";
+            if (da.alive == true)
+                richTextBox1.Text += da.Name + " remaining hp: " + da.Health + "\n";
+
+            //Player.DoDamage(Enemy);
+            //richTextBox1.Text += "\nYou attacked, Enemy's Hp: " + Enemy.Health;
         }
         private void EndTurn_Click(object sender, EventArgs e)
         {
             FSM.ChangeState(GameStart.ENDTURN);
-            richTextBox1.Text = "You Chose to:" + FSM.GetState().Name;
+            active.activeParty.activePlaya.EndTurn();
+            richTextBox1.Text = active.activeParty.activePlaya.Name + " Chose to:" + FSM.GetState().Name;
+            richTextBox1.Text += "\nActive Entity: " + active.activeParty.activePlaya.Name;
+
+            //if (defend == false)
+            //{
+            //    Enemy.DoDamage(Player);
+            //    richTextBox1.Text += "\nEnemy attacked you! Your Hp: " + Player.Health;
+            //}
+            //else
+            //    richTextBox1.Text += "\nEnemy attacked you! Blocked! Your Hp: " + Player.Health;
         }
         private void Defend_Click(object sender, EventArgs e)
         {
             FSM.ChangeState(GameStart.DEFEND);
-            richTextBox1.Text = "You Chose to:" + FSM.GetState().Name;
+            richTextBox1.Text = active.activeParty.activePlaya.Name + " Chose to:" + FSM.GetState().Name;
+
+            //defend = true;
         }
         private void Flee_Click(object sender, EventArgs e)
         {
             FSM.ChangeState(GameStart.FLEE);
             richTextBox1.Text = "You Chose to:" + FSM.GetState().Name;
+
+            //Enemy.DoDamage(Player);
+            //richTextBox1.Text += "\nYou took extra damage for being a wimp! \nEnemy attacked you! Your Hp: " + Player.Health;
         }
         private void Save_Click(object sender, EventArgs e)
         {
