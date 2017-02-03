@@ -33,6 +33,18 @@ namespace CombatForms
         Entity ae = new Entity(50, "Aeris the Archer", true);
         Entity ds = new Entity(100, "Dwarf Soilder", true);
         Entity da = new Entity(50, "Dwark Archer", true);
+
+        public void AliveCheck()
+        {
+            if (cl.alive == true)
+                richTextBox1.Text += cl.Name + " remaining hp: " + cl.Health + "\n";
+            if (ae.alive == true)
+                richTextBox1.Text += ae.Name + " remaining hp: " + ae.Health + "\n";
+            if (ds.alive == true)
+                richTextBox1.Text += ds.Name + " remaining hp: " + ds.Health + "\n";
+            if (da.alive == true)
+                richTextBox1.Text += da.Name + " remaining hp: " + da.Health + "\n";
+        }
         public Form1()
         {
             InitializeComponent();
@@ -72,33 +84,29 @@ namespace CombatForms
         private void Attack_Click(object sender, EventArgs e)
         {
             FSM.ChangeState(GameStart.ATTACK);
+
             richTextBox1.Text = active.activeParty.activePlaya.Name + " Chose to: " + FSM.GetState().Name + "\n";
-            if (active.activeParty.activePlaya.Name == "Cloud")
+
+            if (cl.alive == true && active.activeParty.activePlaya.Name == "Cloud")
                 cl.DoDamage(ds);
-            else if (active.activeParty.activePlaya.Name == "Cloud" && ds.Health <= 0)
+            else if (cl.alive == true && active.activeParty.activePlaya.Name == "Cloud" && ds.Health <= 0)
                 cl.DoDamage(ds);
-            else if (active.activeParty.activePlaya.Name == "Aeris the Archer")
+            else if (ae.alive == true && active.activeParty.activePlaya.Name == "Aeris the Archer")
             {
                 ae.DoDamage(da);
                 ae.DoDamage(ds);
             }
-            else if (active.activeParty.activePlaya.Name == "Dwarf Soilder")
+            else if (ds.alive == true && active.activeParty.activePlaya.Name == "Dwarf Soilder")
                 ds.DoDamage(cl);
-            else if (active.activeParty.activePlaya.Name == "Dwarf Soilder" && cl.Health <= 0)
+            else if (ds.alive == true && active.activeParty.activePlaya.Name == "Dwarf Soilder" && cl.Health <= 0)
                 ds.DoDamage(ae);
-            else if (active.activeParty.activePlaya.Name == "Dwarf Archer")
+            else if (da.alive == true && active.activeParty.activePlaya.Name == "Dwarf Archer")
             {
                 da.DoDamage(ae);
                 da.DoDamage(cl);
             }
-            if (cl.alive == true)
-                richTextBox1.Text += cl.Name + " remaining hp: " + cl.Health + "\n";
-            if (ae.alive == true)
-                richTextBox1.Text += ae.Name + " remaining hp: " + ae.Health + "\n";
-            if (ds.alive == true)
-                richTextBox1.Text += ds.Name + " remaining hp: " + ds.Health + "\n";
-            if (da.alive == true)
-                richTextBox1.Text += da.Name + " remaining hp: " + da.Health + "\n";
+
+            AliveCheck();
 
             //Player.DoDamage(Enemy);
             //richTextBox1.Text += "\nYou attacked, Enemy's Hp: " + Enemy.Health;
@@ -129,7 +137,8 @@ namespace CombatForms
         {
             FSM.ChangeState(GameStart.FLEE);
             richTextBox1.Text = "You Chose to:" + FSM.GetState().Name;
-
+            active.activeParty.activePlaya.alive = false;
+            MessageBox.Show(active.activeParty.activePlaya.Name + " has ran away!");
             //Enemy.DoDamage(Player);
             //richTextBox1.Text += "\nYou took extra damage for being a wimp! \nEnemy attacked you! Your Hp: " + Player.Health;
         }
