@@ -64,7 +64,7 @@ namespace CombatForms
             string newState = (state as Enum).ToString();
             if (transitions.ContainsKey(key) == false)
             {
-                Console.WriteLine("Invalid Transition " + key);
+                Debug.WriteLine("Invalid Transition " + key);
                 return;
             }
             if (currentState.onExit != null)
