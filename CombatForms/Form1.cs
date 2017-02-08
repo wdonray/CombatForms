@@ -127,7 +127,6 @@ namespace CombatForms
         public Form1()
         {
             InitializeComponent();
-
             active.AddParty(a);
             active.AddParty(b);
             active.AddPlaya(cl, 1);
