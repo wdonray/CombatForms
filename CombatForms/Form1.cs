@@ -81,20 +81,29 @@ namespace CombatForms
             richTextBox1.Text += "\nActive Entity: " + active.activeParty.activePlaya.Name;
 
             richTextBox2.Text = cl.Name;
-            progressBar1.Value = (int)cl.Health;
-
             richTextBox3.Text = ae.Name;
             richTextBox4.Text = ds.Name;
             richTextBox5.Text = da.Name;
         }
+
         private void Form1_Load(object sender, EventArgs e) { }
         private void richTextBox1_TextChanged(object sender, EventArgs e) { }
+        private void richTextBox2_TextChanged(object sender, EventArgs e) { }
+        private void richTextBox3_TextChanged(object sender, EventArgs e) { }
+        private void richTextBox4_TextChanged(object sender, EventArgs e) { }
+        private void richTextBox5_TextChanged(object sender, EventArgs e) { }
+        private void progressBar1_Click(object sender, EventArgs e) { }
+        private void progressBar2_Click(object sender, EventArgs e) { }
+        private void progressBar3_Click(object sender, EventArgs e) { }
+        private void progressBar4_Click(object sender, EventArgs e) { }
+
         private void Attack_Click(object sender, EventArgs e)
         {
             FSM.ChangeState(GameStart.ATTACK);
 
             richTextBox1.Text = active.activeParty.activePlaya.Name + " Chose to: " + FSM.GetState().Name + "\n";
 
+            //This is a freaking mess honestly 
             while (HitCheck == false)
             {
                 if (cl.alive == true && active.activeParty.activePlaya.Name == "Cloud")
@@ -134,7 +143,7 @@ namespace CombatForms
                     da.DoDamage(ae);
                     da.DoDamage(cl);
                     progressBar2.Value = (int)ae.Health;
-                    progressBar2.Value = (int)cl.Health;
+                    progressBar1.Value = (int)cl.Health;
                     HitCheck = true;
                 }
             }
@@ -172,44 +181,5 @@ namespace CombatForms
             //this.richTextBox1.Text = "Current State:" + FSM.GetState().Name;
         }
 
-        private void progressBar1_Click(object sender, EventArgs e)
-        {
-          
-        }
-
-        private void progressBar2_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void richTextBox2_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void progressBar3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void progressBar4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
