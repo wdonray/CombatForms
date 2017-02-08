@@ -53,6 +53,10 @@ namespace CombatForms
                 i++;
             }
         }
+        public void Update()
+        {
+
+        }
         private List<Party> party = new List<Party>();
     }
 }
