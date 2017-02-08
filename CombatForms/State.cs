@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CombatForms
 {
-    class State 
+    class State
     {
         public delegate void Handler();
         public Handler onEnter;

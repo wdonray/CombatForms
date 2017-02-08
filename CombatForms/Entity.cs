@@ -11,11 +11,12 @@ namespace CombatForms
     public class Entity : IDamageable, IDamager
     {
         public Entity() { }
-        public Entity(float h, string n, bool a) { health = h; name = n; alive = a; }
-
-        public delegate void OnEndTurn();
-        [XmlIgnore]
-        public OnEndTurn onEndTurn;
+        public Entity(float h, string n, bool a)
+        {
+            m_Health = h;
+            m_Name = n;
+            m_Alive = a;
+        }
 
         public void DoDamage(IDamageable d)
         {
@@ -24,9 +25,9 @@ namespace CombatForms
         }
         public void TakeDamage(float f)
         {
-            health -= f;
-            if (health <= 0)
-                alive = false;
+            m_Health -= f;
+            if (m_Health <= 0)
+                m_Alive = false;
         }
         public void EndTurn()
         {
@@ -34,11 +35,15 @@ namespace CombatForms
                 onEndTurn.Invoke();
         }
 
-        public float Health { get { return health; } }
-        public float health;
-        public string name;
-        public string Name { get { return name; } set { name = value; } }
-        public bool alive;
-        public bool Alive { get { return alive; } }
+        public float m_Health;
+        public string m_Name;
+        public bool m_Alive;
+        public float m_Speed;
+        public delegate void Handler();
+        public Handler onEndTurn;
+        public bool Alive { get { return m_Alive; } }
+        public float Health { get { return m_Health; } }
+        public string Name { get { return m_Name; } set { m_Name = value; } }
+        public float Speed { get { return m_Speed; } }
     }
 }
