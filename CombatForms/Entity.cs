@@ -19,33 +19,113 @@ namespace CombatForms
             m_Speed = s;
             m_Block = b;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="d"></param>
         public void DoDamage(IDamageable d)
         {
             Random rand = new Random();
             d.TakeDamage(rand.Next(10, 16));
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="f"></param>
         public void TakeDamage(float f)
         {
             m_Health -= f;
             if (m_Health <= 0)
                 m_Alive = false;
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public void EndTurn()
         {
             if (onEndTurn != null)
                 onEndTurn.Invoke();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Attack()
+        {
+            if (GameManager.Instance.player3.Alive == true &&
+                GameManager.Instance.player1.Alive == true
+                && Combat.Instance.activeParty.activePlaya.Name == "Cloud")
+                GameManager.Instance.player1.DoDamage(GameManager.Instance.player3);
+            else if (GameManager.Instance.player3.Alive == false &&
+                GameManager.Instance.player1.Alive == true
+                && Combat.Instance.activeParty.activePlaya.Name == "Cloud")
+                GameManager.Instance.player1.DoDamage(GameManager.Instance.player4);
+            else if (GameManager.Instance.player2.Alive == true &&
+                Combat.Instance.activeParty.activePlaya.Name == "Aeris the Archer")
+            {
+                if (GameManager.Instance.player4.Alive == true)
+                    GameManager.Instance.player2.DoDamage(GameManager.Instance.player4);
+                if (GameManager.Instance.player3.Alive == true)
+                    GameManager.Instance.player2.DoDamage(GameManager.Instance.player3);
+            }
+            else if (GameManager.Instance.player1.Alive == true &&
+                GameManager.Instance.player3.Alive == true &&
+                Combat.Instance.activeParty.activePlaya.Name == "Dwarf Soilder")
+                GameManager.Instance.player3.DoDamage(GameManager.Instance.player1);
+            else if (GameManager.Instance.player1.Alive == true &&
+                GameManager.Instance.player3.Alive == true &&
+                Combat.Instance.activeParty.activePlaya.Name == "Dwarf Soilder")
+                GameManager.Instance.player3.DoDamage(GameManager.Instance.player2);
+            else if (GameManager.Instance.player4.Alive == true &&
+                  Combat.Instance.activeParty.activePlaya.Name == "Dwarf Archer")
+            {
+                if (GameManager.Instance.player2.Alive == true)
+                    GameManager.Instance.player4.DoDamage(GameManager.Instance.player2);
+                if (GameManager.Instance.player1.Alive == true)
+                    GameManager.Instance.player4.DoDamage(GameManager.Instance.player1);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Kill()
+        {
+            if (Combat.Instance.activeParty.activePlaya.Health == 100)
+                Combat.Instance.activeParty.activePlaya.TakeDamage(100);
+            else if (Combat.Instance.activeParty.activePlaya.m_Health == 50)
+                Combat.Instance.activeParty.activePlaya.TakeDamage(50);
+            Combat.Instance.activeParty.activePlaya.Alive = false;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Flee()
+        {
+            if (Combat.Instance.activeParty.activePlaya.Name == "Cloud")
+                Kill();
+            else if (Combat.Instance.activeParty.activePlaya.Name == "Aeris the Archer")
+                Kill();
+            else if (Combat.Instance.activeParty.activePlaya.Name == "Dwarf Soilder")
+                Kill();
+            else if (Combat.Instance.activeParty.activePlaya.Name == "Dwarf Archer")
+                Kill();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Defend()
+        {
+            Combat.Instance.activeParty.activePlaya.Block = true;
+        }
 
-        public float m_Health;
-        public string m_Name;
-        public bool m_Alive;
-        public float m_Speed;
-        public bool m_Block;
+        private float m_Health;
+        private string m_Name;
+        private bool m_Alive;
+        private float m_Speed;
+        private bool m_Block;
         public delegate void Handler();
         public Handler onEndTurn;
-        public bool Alive { get { return m_Alive; } }
-        public bool Block { get { return m_Block; } }
+        public bool Alive { get { return m_Alive; } set { m_Alive = value; } }
+        public bool Block { get { return m_Block; } set { m_Block = value; } }
         public float Health { get { return m_Health; } }
         public string Name { get { return m_Name; } set { m_Name = value; } }
         public float Speed { get { return m_Speed; } }

@@ -10,6 +10,18 @@ namespace CombatForms
     {
         public Combat() { }
         public Party activeParty;
+        private static Combat instance = null;
+        public static Combat Instance
+        {
+            get 
+            {
+                if(instance == null)
+                {
+                    instance = new Combat();
+                }
+                return instance;
+            }
+        }
         /// <summary>
         /// Function to create a party
         /// </summary>

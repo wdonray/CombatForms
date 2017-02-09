@@ -8,6 +8,7 @@ using System.Threading;
 
 namespace CombatForms
 {
+
     class FiniteStateMachine<T>
     {
         private State currentState;
@@ -17,6 +18,19 @@ namespace CombatForms
         {
             states = new Dictionary<string, State>(); //Ability to know when this happens
             transitions = new Dictionary<string, List<State>>();
+        }
+        private static FiniteStateMachine<T> instance = null;
+
+        public static FiniteStateMachine<T> Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new FiniteStateMachine<T>();
+                }
+                return instance;
+            }
         }
         /// <summary>
         /// Creates a state and adds a key and value to it

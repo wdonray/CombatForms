@@ -6,6 +6,14 @@ using System.Windows.Forms;
 
 namespace CombatForms
 {
+    public enum GameStart
+    {
+        INIT = 0,
+        ATTACK = 1,
+        REST = 2,
+        DEFEND = 3,
+        FLEE = 4,
+    }
     static class Program
     {
         /// <summary>
@@ -14,34 +22,47 @@ namespace CombatForms
         [STAThread]
         static void Main()
         {
+            Party a = new Party();
+            Party b = new Party();
             Entity cl = new Entity(100, "Cloud", true, false, 4);
             Entity ae = new Entity(50, "Aeris the Archer", true, false, 3);
             Entity ds = new Entity(100, "Dwarf Soilder", true, false, 2);
             Entity da = new Entity(50, "Dwarf Archer", true, false, 1);
+
             GameManager.Instance.player1 = cl;
             GameManager.Instance.player2 = ae;
             GameManager.Instance.player3 = ds;
             GameManager.Instance.player4 = da;
+            GameManager.Instance.currentPlayer = cl;
 
+            Combat.Instance.AddParty(a);
+            Combat.Instance.AddParty(b);
+            Combat.Instance.AddPlaya(cl, 1);
+            Combat.Instance.AddPlaya(ae, 1);
+            Combat.Instance.AddPlaya(ds, 2);
+            Combat.Instance.AddPlaya(da, 2);
 
+            FiniteStateMachine<GameStart>.Instance.AddState(GameStart.INIT);
+            FiniteStateMachine<GameStart>.Instance.AddState(GameStart.ATTACK);
+            FiniteStateMachine<GameStart>.Instance.AddState(GameStart.REST);
+            FiniteStateMachine<GameStart>.Instance.AddState(GameStart.DEFEND);
+            FiniteStateMachine<GameStart>.Instance.AddState(GameStart.FLEE);
 
-        //     public void AliveCheck()
-        //{
-        //    if (cl.m_Alive == true)
-        //        richTextBox1.Text += cl.Name + " remaining hp: " + cl.Health + "\n";
-        //    if (ae.m_Alive == true)
-        //        richTextBox1.Text += ae.Name + " remaining hp: " + ae.Health + "\n";
-        //    if (ds.m_Alive == true)
-        //        richTextBox1.Text += ds.Name + " remaining hp: " + ds.Health + "\n";
-        //    if (da.m_Alive == true)
-        //        richTextBox1.Text += da.Name + " remaining hp: " + da.Health + "\n";
-        //    if (cl.m_Alive == false && ae.m_Alive == false)
-        //        this.Close();
-        //    if (ds.m_Alive == false && da.m_Alive == false)
-        //        this.Close();
-        //}
+            FiniteStateMachine<GameStart>.Instance.AddTransition(GameStart.INIT, GameStart.ATTACK);
+            FiniteStateMachine<GameStart>.Instance.AddTransition(GameStart.INIT, GameStart.DEFEND);
+            FiniteStateMachine<GameStart>.Instance.AddTransition(GameStart.INIT, GameStart.FLEE);
 
-        Application.EnableVisualStyles();
+            FiniteStateMachine<GameStart>.Instance.AddTransition(GameStart.ATTACK, GameStart.REST);
+            FiniteStateMachine<GameStart>.Instance.AddTransition(GameStart.DEFEND, GameStart.REST);
+            FiniteStateMachine<GameStart>.Instance.AddTransition(GameStart.FLEE, GameStart.REST);
+
+            FiniteStateMachine<GameStart>.Instance.AddTransition(GameStart.REST, GameStart.ATTACK);
+            FiniteStateMachine<GameStart>.Instance.AddTransition(GameStart.REST, GameStart.DEFEND);
+            FiniteStateMachine<GameStart>.Instance.AddTransition(GameStart.REST, GameStart.FLEE);
+
+            FiniteStateMachine<GameStart>.Instance.Start(GameStart.INIT);
+
+            Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
