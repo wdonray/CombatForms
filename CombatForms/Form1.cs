@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Diagnostics;
 namespace CombatForms
 {
     public enum GameStart
@@ -42,6 +43,10 @@ namespace CombatForms
                 richTextBox1.Text += ds.Name + " remaining hp: " + ds.Health + "\n";
             if (da.m_Alive == true)
                 richTextBox1.Text += da.Name + " remaining hp: " + da.Health + "\n";
+            if (cl.m_Alive == false && ae.m_Alive == false)
+                this.Close();
+            if (ds.m_Alive == false && da.m_Alive == false)
+                this.Close();
         }
         public void Attack()
         {
@@ -109,7 +114,10 @@ namespace CombatForms
         }
         public void Kill()
         {
-            active.activeParty.activePlaya.TakeDamage(100);
+            if (active.activeParty.activePlaya.m_Health == 100)
+                active.activeParty.activePlaya.TakeDamage(100);
+            else if (active.activeParty.activePlaya.m_Health == 50)
+                active.activeParty.activePlaya.TakeDamage(50);
             active.activeParty.activePlaya.m_Alive = false;
             MessageBox.Show(active.activeParty.activePlaya.Name + " has ran away!");
         }
@@ -206,6 +214,7 @@ namespace CombatForms
             FSM.ChangeState(GameStart.ATTACK);
             Attack();
             AliveCheck();
+            richTextBox1.Text = GameManager.Instance.player1.m_Name;
         }
         private void EndTurn_Click(object sender, EventArgs e)
         {
@@ -223,6 +232,7 @@ namespace CombatForms
         {
             FSM.ChangeState(GameStart.FLEE);
             Flee();
+            AliveCheck();
         }
         private void Save_Click(object sender, EventArgs e)
         {

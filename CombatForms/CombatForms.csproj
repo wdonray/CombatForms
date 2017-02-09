@@ -58,6 +58,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="FSM.cs" />
+    <Compile Include="GameManager.cs" />
     <Compile Include="Interface.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Party.cs" />
