@@ -26,7 +26,7 @@ namespace CombatForms
             Party b = new Party();
             Entity cl = new Entity(100, "Cloud", true, false, 4);
             Entity ae = new Entity(50, "Aeris the Archer", true, false, 3);
-            Entity ds = new Entity(100, "Dwarf Soilder", true, false, 2);
+            Entity ds = new Entity(100, "Dwarf Soldier", true, false, 2);
             Entity da = new Entity(50, "Dwarf Archer", true, false, 1);
 
             GameManager.Instance.player1 = cl;

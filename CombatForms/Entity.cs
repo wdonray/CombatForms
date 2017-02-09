@@ -69,11 +69,11 @@ namespace CombatForms
             }
             else if (GameManager.Instance.player1.Alive == true &&
                 GameManager.Instance.player3.Alive == true &&
-                Combat.Instance.activeParty.activePlaya.Name == "Dwarf Soilder")
+                Combat.Instance.activeParty.activePlaya.Name == "Dwarf Soldier")
                 GameManager.Instance.player3.DoDamage(GameManager.Instance.player1);
             else if (GameManager.Instance.player1.Alive == true &&
                 GameManager.Instance.player3.Alive == true &&
-                Combat.Instance.activeParty.activePlaya.Name == "Dwarf Soilder")
+                Combat.Instance.activeParty.activePlaya.Name == "Dwarf Soldier")
                 GameManager.Instance.player3.DoDamage(GameManager.Instance.player2);
             else if (GameManager.Instance.player4.Alive == true &&
                   Combat.Instance.activeParty.activePlaya.Name == "Dwarf Archer")
@@ -104,7 +104,7 @@ namespace CombatForms
                 Kill();
             else if (Combat.Instance.activeParty.activePlaya.Name == "Aeris the Archer")
                 Kill();
-            else if (Combat.Instance.activeParty.activePlaya.Name == "Dwarf Soilder")
+            else if (Combat.Instance.activeParty.activePlaya.Name == "Dwarf Soldier")
                 Kill();
             else if (Combat.Instance.activeParty.activePlaya.Name == "Dwarf Archer")
                 Kill();
