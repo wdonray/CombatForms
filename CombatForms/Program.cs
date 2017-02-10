@@ -24,23 +24,23 @@ namespace CombatForms
         {
             Party a = new Party();
             Party b = new Party();
-            Entity cl = new Entity(100, "Cloud", true, false, 4);
-            Entity ae = new Entity(50, "Aeris the Archer", true, false, 3);
-            Entity ds = new Entity(100, "Dwarf Soldier", true, false, 2);
-            Entity da = new Entity(50, "Dwarf Archer", true, false, 1);
+            Entity cloud = new Entity(100, "Cloud", true, false, 4);
+            Entity aeris = new Entity(50, "Aeris the Archer", true, false, 3);
+            Entity entitySoldier = new Entity(100, "Dwarf Soldier", true, false, 2);
+            Entity entityArcher = new Entity(50, "Dwarf Archer", true, false, 1);
 
-            GameManager.Instance.player1 = cl;
-            GameManager.Instance.player2 = ae;
-            GameManager.Instance.player3 = ds;
-            GameManager.Instance.player4 = da;
-            GameManager.Instance.currentPlayer = cl;
+            GameManager.Instance.player1 = cloud;
+            GameManager.Instance.player2 = aeris;
+            GameManager.Instance.player3 = entitySoldier;
+            GameManager.Instance.player4 = entityArcher;
+            GameManager.Instance.currentPlayer = cloud;
 
             Combat.Instance.AddParty(a);
             Combat.Instance.AddParty(b);
-            Combat.Instance.AddPlaya(cl, 1);
-            Combat.Instance.AddPlaya(ae, 1);
-            Combat.Instance.AddPlaya(ds, 2);
-            Combat.Instance.AddPlaya(da, 2);
+            Combat.Instance.AddPlaya(cloud, 1);
+            Combat.Instance.AddPlaya(aeris, 1);
+            Combat.Instance.AddPlaya(entitySoldier, 2);
+            Combat.Instance.AddPlaya(entityArcher, 2);
 
             FiniteStateMachine<GameStart>.Instance.AddState(GameStart.INIT);
             FiniteStateMachine<GameStart>.Instance.AddState(GameStart.ATTACK);

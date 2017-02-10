@@ -89,10 +89,8 @@ namespace CombatForms
         /// </summary>
         public void Kill()
         {
-            if (Combat.Instance.activeParty.activePlaya.Health == 100)
-                Combat.Instance.activeParty.activePlaya.TakeDamage(100);
-            else if (Combat.Instance.activeParty.activePlaya.m_Health == 50)
-                Combat.Instance.activeParty.activePlaya.TakeDamage(50);
+            if (Combat.Instance.activeParty.activePlaya.Health <= 100)
+                Combat.Instance.activeParty.activePlaya.TakeDamage(Combat.Instance.activeParty.activePlaya.Health);
             Combat.Instance.activeParty.activePlaya.Alive = false;
         }
         /// <summary>

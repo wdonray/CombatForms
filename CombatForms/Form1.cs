@@ -45,6 +45,7 @@ namespace CombatForms
             if (GameManager.Instance.player3.Alive == false && GameManager.Instance.player4.Alive == false)
                 this.Close();
         }
+
         #region Text Box and Health Bar
         private void Form1_Load(object sender, EventArgs e) { }
         private void richTextBox1_TextChanged(object sender, EventArgs e) { }
