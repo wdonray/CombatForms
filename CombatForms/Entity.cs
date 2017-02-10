@@ -51,37 +51,99 @@ namespace CombatForms
         /// </summary>
         public void Attack()
         {
+            Random rBlock = new Random();
+            float f = (float)(rBlock.NextDouble() * (6d - 1d) + 1d);
             if (GameManager.Instance.player3.Alive == true &&
                 GameManager.Instance.player1.Alive == true
                 && Combat.Instance.activeParty.activePlaya.Name == "Cloud")
-                GameManager.Instance.player1.DoDamage(GameManager.Instance.player3);
+            {
+                if (GameManager.Instance.player3.Block == false)
+                    GameManager.Instance.player1.DoDamage(GameManager.Instance.player3);
+                else
+                {
+                    GameManager.Instance.player1.DoDamage(GameManager.Instance.player3);
+                    GameManager.Instance.player3.Health += f;
+                    GameManager.Instance.player3.Block = false;
+                }
+            }
             else if (GameManager.Instance.player3.Alive == false &&
                 GameManager.Instance.player1.Alive == true
                 && Combat.Instance.activeParty.activePlaya.Name == "Cloud")
-                GameManager.Instance.player1.DoDamage(GameManager.Instance.player4);
+            {
+                if (GameManager.Instance.player4.Block == false)
+                    GameManager.Instance.player1.DoDamage(GameManager.Instance.player4);
+                else
+                {
+                    GameManager.Instance.player1.DoDamage(GameManager.Instance.player4);
+                    GameManager.Instance.player4.Health += f;
+                    GameManager.Instance.player4.Block = false;
+                }
+            }
             else if (GameManager.Instance.player2.Alive == true &&
                 Combat.Instance.activeParty.activePlaya.Name == "Aeris the Archer")
             {
-                if (GameManager.Instance.player4.Alive == true)
+                if (GameManager.Instance.player4.Alive == true && GameManager.Instance.player4.Block == false)
                     GameManager.Instance.player2.DoDamage(GameManager.Instance.player4);
-                if (GameManager.Instance.player3.Alive == true)
+                else if (GameManager.Instance.player4.Alive == true && GameManager.Instance.player4.Block == true)
+                {
+                    GameManager.Instance.player2.DoDamage(GameManager.Instance.player4);
+                    GameManager.Instance.player4.Health += f;
+                    GameManager.Instance.player4.Block = false;
+                }
+                if (GameManager.Instance.player3.Alive == true && GameManager.Instance.player3.Block == false)
                     GameManager.Instance.player2.DoDamage(GameManager.Instance.player3);
+                else if (GameManager.Instance.player3.Alive == true && GameManager.Instance.player3.Block == true)
+                {
+                    GameManager.Instance.player2.DoDamage(GameManager.Instance.player3);
+                    GameManager.Instance.player3.Health += f;
+                    GameManager.Instance.player3.Block = false;
+                }
             }
             else if (GameManager.Instance.player1.Alive == true &&
                 GameManager.Instance.player3.Alive == true &&
                 Combat.Instance.activeParty.activePlaya.Name == "Dwarf Soldier")
-                GameManager.Instance.player3.DoDamage(GameManager.Instance.player1);
+            {
+                if (GameManager.Instance.player1.Block == false)
+                    GameManager.Instance.player3.DoDamage(GameManager.Instance.player1);
+                else
+                {
+                    GameManager.Instance.player3.DoDamage(GameManager.Instance.player1);
+                    GameManager.Instance.player1.Health += f;
+                    GameManager.Instance.player1.Block = false;
+                }
+            }
             else if (GameManager.Instance.player1.Alive == true &&
                 GameManager.Instance.player3.Alive == true &&
                 Combat.Instance.activeParty.activePlaya.Name == "Dwarf Soldier")
-                GameManager.Instance.player3.DoDamage(GameManager.Instance.player2);
+            {
+                if (GameManager.Instance.player2.Block == false)
+                    GameManager.Instance.player3.DoDamage(GameManager.Instance.player2);
+                else
+                {
+                    GameManager.Instance.player3.DoDamage(GameManager.Instance.player2);
+                    GameManager.Instance.player2.Health += f;
+                    GameManager.Instance.player2.Block = false;
+                }
+            }
             else if (GameManager.Instance.player4.Alive == true &&
                   Combat.Instance.activeParty.activePlaya.Name == "Dwarf Archer")
             {
-                if (GameManager.Instance.player2.Alive == true)
+                if (GameManager.Instance.player2.Alive == true && GameManager.Instance.player2.Block == false)
                     GameManager.Instance.player4.DoDamage(GameManager.Instance.player2);
-                if (GameManager.Instance.player1.Alive == true)
+                else if (GameManager.Instance.player2.Alive == true && GameManager.Instance.player2.Block == true)
+                {
+                    GameManager.Instance.player4.DoDamage(GameManager.Instance.player2);
+                    GameManager.Instance.player2.Health += f;
+                    GameManager.Instance.player2.Block = false;
+                }
+                if (GameManager.Instance.player1.Alive == true && GameManager.Instance.player1.Block == false)
                     GameManager.Instance.player4.DoDamage(GameManager.Instance.player1);
+                else if (GameManager.Instance.player2.Alive == true && GameManager.Instance.player1.Block == false)
+                {
+                    GameManager.Instance.player4.DoDamage(GameManager.Instance.player1);
+                    GameManager.Instance.player1.Health += f;
+                    GameManager.Instance.player1.Block = false;
+                }
             }
         }
         /// <summary>
@@ -124,7 +186,7 @@ namespace CombatForms
         public Handler onEndTurn;
         public bool Alive { get { return m_Alive; } set { m_Alive = value; } }
         public bool Block { get { return m_Block; } set { m_Block = value; } }
-        public float Health { get { return m_Health; } }
+        public float Health { get { return m_Health; } set { m_Health = value; } }
         public string Name { get { return m_Name; } set { m_Name = value; } }
         public float Speed { get { return m_Speed; } }
     }

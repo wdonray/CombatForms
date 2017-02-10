@@ -42,9 +42,8 @@ namespace CombatForms
 
         public void AddPlaya(Entity a, int p)
         {
-            party[p - 1].AddPlayer(a);
+            party[p - 1].AddPlayer(a);   
         }
-
         /// <summary>
         /// Function to go to the next Party
         /// </summary>

@@ -13,8 +13,8 @@ namespace CombatForms
         public Party() { }
         public Entity activePlaya;
         public delegate void OnPartyEnd();
-        [XmlIgnore]
         public OnPartyEnd onPartyEnd;
+
         /// <summary>
         /// Function to set the next player in the list to be the active player
         /// </summary>
@@ -64,12 +64,18 @@ namespace CombatForms
             if (players.Count <= currentID)
             {
                 players.Add(p);
-                activePlaya = players[currentID];
+                
                 p.onEndTurn += GetNext;
                 return;
             }
             players.Add(p);
             p.onEndTurn += GetNext;
+            Sort();  
+        }
+        public void Sort()
+        {
+            players.Sort((x, y) => -1 * x.Speed.CompareTo(y.Speed));
+            activePlaya = players[currentID];
         }
         private List<Entity> players = new List<Entity>();
     }

@@ -33,13 +33,13 @@ namespace CombatForms
         public void AliveCheck()
         {
             if (GameManager.Instance.player1.Alive == true)
-                richTextBox1.Text += GameManager.Instance.player1.Name + " remaining hp: " + GameManager.Instance.player1.Health + "\n";
+                richTextBox1.Text += GameManager.Instance.player1.Name + " remaining hp: " + (Math.Round(GameManager.Instance.player1.Health)) + "\n";
             if (GameManager.Instance.player2.Alive == true)
-                richTextBox1.Text += GameManager.Instance.player2.Name + " remaining hp: " + GameManager.Instance.player2.Health + "\n";
+                richTextBox1.Text += GameManager.Instance.player2.Name + " remaining hp: " + (Math.Round(GameManager.Instance.player2.Health)) + "\n";
             if (GameManager.Instance.player3.Alive == true)
-                richTextBox1.Text += GameManager.Instance.player3.Name + " remaining hp: " + GameManager.Instance.player3.Health + "\n";
+                richTextBox1.Text += GameManager.Instance.player3.Name + " remaining hp: " + (Math.Round(GameManager.Instance.player3.Health)) + "\n";
             if (GameManager.Instance.player4.Alive == true)
-                richTextBox1.Text += GameManager.Instance.player4.Name + " remaining hp: " + GameManager.Instance.player4.Health + "\n";
+                richTextBox1.Text += GameManager.Instance.player4.Name + " remaining hp: " + (Math.Round(GameManager.Instance.player4.Health)) + "\n";
             if (GameManager.Instance.player1.Alive == false && GameManager.Instance.player2.Alive == false)
                 this.Close();
             if (GameManager.Instance.player3.Alive == false && GameManager.Instance.player4.Alive == false)

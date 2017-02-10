@@ -24,10 +24,10 @@ namespace CombatForms
         {
             Party a = new Party();
             Party b = new Party();
-            Entity cloud = new Entity(100, "Cloud", true, false, 4);
-            Entity aeris = new Entity(50, "Aeris the Archer", true, false, 3);
+            Entity cloud = new Entity(100, "Cloud", true, false, 1);
+            Entity aeris = new Entity(50, "Aeris the Archer", true, false, 4);
             Entity entitySoldier = new Entity(100, "Dwarf Soldier", true, false, 2);
-            Entity entityArcher = new Entity(50, "Dwarf Archer", true, false, 1);
+            Entity entityArcher = new Entity(50, "Dwarf Archer", true, false, 3);
 
             GameManager.Instance.player1 = cloud;
             GameManager.Instance.player2 = aeris;
@@ -41,6 +41,7 @@ namespace CombatForms
             Combat.Instance.AddPlaya(aeris, 1);
             Combat.Instance.AddPlaya(entitySoldier, 2);
             Combat.Instance.AddPlaya(entityArcher, 2);
+            Combat.Instance.activeParty.Sort();
 
             FiniteStateMachine<GameStart>.Instance.AddState(GameStart.INIT);
             FiniteStateMachine<GameStart>.Instance.AddState(GameStart.ATTACK);
