@@ -22,26 +22,25 @@ namespace CombatForms
         [STAThread]
         static void Main()
         {
-            Party a = new Party();
-            Party b = new Party();
-            Entity cloud = new Entity(100, "Cloud", true, false, 1);
-            Entity aeris = new Entity(50, "Aeris the Archer", true, false, 4);
-            Entity entitySoldier = new Entity(100, "Dwarf Soldier", true, false, 2);
-            Entity entityArcher = new Entity(50, "Dwarf Archer", true, false, 3);
+            Party playerParty = new Party();
+            Party enemyParty = new Party();
+            Entity cloud = new Entity(100, "Cloud", true, false, 1, Entity.EType.PLAYER);
+            Entity aeris = new Entity(100, "Aeris the Archer", true, false, 4, Entity.EType.PLAYER);
+            Entity entitySoldier = new Entity(100, "Dwarf Soldier", true, false, 2, Entity.EType.ENEMY);
+            Entity entityArcher = new Entity(100, "Dwarf Archer", true, false, 3, Entity.EType.ENEMY);
+            playerParty.AddPlayer(cloud);
+            playerParty.AddPlayer(aeris);
+            enemyParty.AddPlayer(entitySoldier);
+            enemyParty.AddPlayer(entityArcher);
+            Combat.Instance.AddToCombatParty(playerParty);
+            Combat.Instance.AddToCombatParty(enemyParty);
+            Combat.Instance.AddPlayerParty(cloud);
+            Combat.Instance.AddPlayerParty(aeris);
+            Combat.Instance.AddEnemyParty(entitySoldier);
+            Combat.Instance.AddEnemyParty(entityArcher);
 
-            GameManager.Instance.player1 = cloud;
-            GameManager.Instance.player2 = aeris;
-            GameManager.Instance.player3 = entitySoldier;
-            GameManager.Instance.player4 = entityArcher;
-            GameManager.Instance.currentPlayer = cloud;
 
-            Combat.Instance.AddParty(a);
-            Combat.Instance.AddParty(b);
-            Combat.Instance.AddPlaya(cloud, 1);
-            Combat.Instance.AddPlaya(aeris, 1);
-            Combat.Instance.AddPlaya(entitySoldier, 2);
-            Combat.Instance.AddPlaya(entityArcher, 2);
-            Combat.Instance.activeParty.Sort();
+            Combat.Instance.CombatPartyMembers.Sort((a, b) => -1 * a.Speed.CompareTo(b.Speed));
 
             FiniteStateMachine<GameStart>.Instance.AddState(GameStart.INIT);
             FiniteStateMachine<GameStart>.Instance.AddState(GameStart.ATTACK);
@@ -62,7 +61,7 @@ namespace CombatForms
             FiniteStateMachine<GameStart>.Instance.AddTransition(GameStart.REST, GameStart.FLEE);
 
             FiniteStateMachine<GameStart>.Instance.Start(GameStart.INIT);
-
+            Combat.Instance.NextParty();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

@@ -78,9 +78,9 @@
             // richTextBox1
             // 
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox1.Location = new System.Drawing.Point(123, 348);
+            this.richTextBox1.Location = new System.Drawing.Point(568, 25);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(333, 114);
+            this.richTextBox1.Size = new System.Drawing.Size(333, 472);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -119,7 +119,7 @@
             // 
             this.richTextBox2.Location = new System.Drawing.Point(12, 27);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(96, 20);
+            this.richTextBox2.Size = new System.Drawing.Size(186, 20);
             this.richTextBox2.TabIndex = 7;
             this.richTextBox2.Text = "";
             this.richTextBox2.TextChanged += new System.EventHandler(this.richTextBox2_TextChanged);
@@ -135,9 +135,9 @@
             // 
             // richTextBox4
             // 
-            this.richTextBox4.Location = new System.Drawing.Point(466, 27);
+            this.richTextBox4.Location = new System.Drawing.Point(381, 27);
             this.richTextBox4.Name = "richTextBox4";
-            this.richTextBox4.Size = new System.Drawing.Size(96, 20);
+            this.richTextBox4.Size = new System.Drawing.Size(181, 20);
             this.richTextBox4.TabIndex = 9;
             this.richTextBox4.Text = "";
             this.richTextBox4.TextChanged += new System.EventHandler(this.richTextBox4_TextChanged);
@@ -163,22 +163,20 @@
             // progressBar2
             // 
             this.progressBar2.Location = new System.Drawing.Point(8, 139);
-            this.progressBar2.Maximum = 50;
             this.progressBar2.Name = "progressBar2";
             this.progressBar2.Size = new System.Drawing.Size(190, 23);
             this.progressBar2.TabIndex = 12;
-            this.progressBar2.Value = 50;
+            this.progressBar2.Value = 100;
             this.progressBar2.Click += new System.EventHandler(this.progressBar2_Click);
             // 
             // progressBar3
             // 
             this.progressBar3.Location = new System.Drawing.Point(381, 139);
-            this.progressBar3.Maximum = 50;
             this.progressBar3.Name = "progressBar3";
             this.progressBar3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.progressBar3.Size = new System.Drawing.Size(181, 23);
             this.progressBar3.TabIndex = 13;
-            this.progressBar3.Value = 50;
+            this.progressBar3.Value = 100;
             this.progressBar3.Click += new System.EventHandler(this.progressBar3_Click);
             // 
             // progressBar4
@@ -195,7 +193,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(574, 509);
+            this.ClientSize = new System.Drawing.Size(906, 509);
             this.Controls.Add(this.progressBar4);
             this.Controls.Add(this.progressBar3);
             this.Controls.Add(this.progressBar2);

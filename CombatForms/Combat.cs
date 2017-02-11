@@ -10,39 +10,74 @@ namespace CombatForms
     {
         public Combat() { }
         public Party activeParty;
+        public Party inactiveParty;
+
+        public Party playerParty = new Party();
+        public Party enemyParty = new Party();
+        private List<Party> combatParty = new List<Party>();
+        private List<Entity> combatPartyMembers = new List<Entity>();
+        private Entity m_activePlaya;
+        public string combatLog;
         private static Combat instance = null;
         public static Combat Instance
         {
-            get 
+            get
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     instance = new Combat();
                 }
                 return instance;
             }
         }
+        public Entity activePlaya
+        {
+            get
+            {
+                combatLog += activeParty.activePlaya.Name + Environment.NewLine;
+                return activeParty.activePlaya;
+            }
+        }
+        public List<Party> CombatParty
+        {
+            get
+            {
+                return combatParty;
+            }
+        }
+        public List<Entity> CombatPartyMembers
+        {
+            get
+            {
+                return combatPartyMembers;
+            }
+        }
         /// <summary>
-        /// Function to create a party
+        /// Function to create a party, Party that contains 2 parties
         /// </summary>
         /// <param name="p"></param>
-        public void AddParty(Party p)
+        public void AddToCombatParty(Party p)
         {
-            if (party.Count == 0)
+            if (combatParty.Count == 0)
             {
-                party.Add(p);
-                activeParty = party[0];
+                combatParty.Add(p);
+                activeParty = combatParty[0];
             }
             else
             {
-                party.Add(p);
+                combatParty.Add(p);
             }
             p.onPartyEnd += NextParty;
         }
-
-        public void AddPlaya(Entity a, int p)
+        public void AddEnemyParty(Entity e)
         {
-            party[p - 1].AddPlayer(a);   
+            enemyParty.AddPlayer(e);
+            combatPartyMembers.Add(e);
+        }
+        public void AddPlayerParty(Entity e)
+        {
+            playerParty.AddPlayer(e);
+            combatPartyMembers.Add(e);
         }
         /// <summary>
         /// Function to go to the next Party
@@ -50,21 +85,22 @@ namespace CombatForms
         public void NextParty()
         {
             int i = 0;
-            foreach (Party p in party)
+            foreach (Party p in combatParty)
             {
-                if (p == activeParty && i + 1 < party.Count)
+                if (p == activeParty && i + 1 < combatParty.Count)
                 {
-                    activeParty = party[i + 1];
+                    inactiveParty = combatParty[i];
+                    activeParty = combatParty[i + 1];
                     break;
                 }
-                else if (activeParty == party[i] && i + 1 >= party.Count)
+                else if (activeParty == combatParty[i] && i + 1 >= combatParty.Count)
                 {
-                    activeParty = party[0];
+                    activeParty = combatParty[0];
+                    inactiveParty = combatParty[1];
                 }
                 i++;
             }
         }
-        private List<Party> party = new List<Party>();
     }
 }
 

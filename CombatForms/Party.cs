@@ -14,7 +14,13 @@ namespace CombatForms
         public Entity activePlaya;
         public delegate void OnPartyEnd();
         public OnPartyEnd onPartyEnd;
-
+        public List<Entity> members
+        {
+            get
+            {
+                return players;
+            }
+        }
         /// <summary>
         /// Function to set the next player in the list to be the active player
         /// </summary>
@@ -31,6 +37,7 @@ namespace CombatForms
             }
             currentID++;
             activePlaya = players[currentID];
+
         }
         /// <summary>
         /// Bool to check if you can go to the next player

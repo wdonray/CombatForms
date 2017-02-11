@@ -13,5 +13,11 @@ namespace CombatForms
     public interface IDamageable
     {
         void TakeDamage(float f);
+        bool isBlocking
+        {
+            get;
+            set;
+        }
     }
+
 }
