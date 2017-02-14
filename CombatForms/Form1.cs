@@ -18,17 +18,41 @@ namespace CombatForms
             for (int i = 0; i < Combat.Instance.playerParty.members.Count; i++)
             {
                 playersText[i].Text = Combat.Instance.playerParty.members[i].Name;
-                playerProgess[i].Value = (int)Combat.Instance.playerParty.members[i].Health;
+
+                if ((int)Combat.Instance.playerParty.members[i].Health != 0)
+                    playerProgess[i].Value = (int)Combat.Instance.playerParty.members[i].Health;
+
+                else if ((int)Combat.Instance.playerParty.members[i].Health <= 0)
+                {
+                    playerProgess[i].Value = 0;
+                    Combat.Instance.playerParty.members[i].Health = 0;
+                }
+
+                //    if (Combat.Instance.playerParty.members.Count == 0)
+                //        this.Close();
             }
 
             for (int i = 0; i < Combat.Instance.enemyParty.members.Count; i++)
             {
                 enemiesText[i].Text = Combat.Instance.enemyParty.members[i].Name;
-                enemiesProgess[i].Value = (int)Combat.Instance.enemyParty.members[i].Health;
+
+                if ((int)Combat.Instance.enemyParty.members[i].Health != 0)
+                    enemiesProgess[i].Value = (int)Combat.Instance.enemyParty.members[i].Health;
+
+                else if ((int)Combat.Instance.enemyParty.members[i].Health <= 0)
+                {
+                    enemiesProgess[i].Value = 0;
+                    Combat.Instance.enemyParty.members[i].Health = 0;
+                }
+
+                //if (Combat.Instance.enemyParty.members[i].Alive == false)
+                //    this.Close();
             }
+
             richTextBox1.Text = Combat.Instance.combatLog;
             richTextBox1.SelectionStart = richTextBox1.Text.Length;
             richTextBox1.ScrollToCaret();
+            Active.Text = ("Active Player: " + Combat.Instance.activeParty.activePlaya.Name);
         }
         List<RichTextBox> playersText = new List<RichTextBox>();
         List<RichTextBox> enemiesText = new List<RichTextBox>();
@@ -63,6 +87,7 @@ namespace CombatForms
         private void progressBar2_Click(object sender, EventArgs e) { }
         private void progressBar3_Click(object sender, EventArgs e) { }
         private void progressBar4_Click(object sender, EventArgs e) { }
+        private void richTextBox6_TextChanged(object sender, EventArgs e) { }
         #endregion
 
         private void Attack_Click(object sender, EventArgs e)
@@ -79,7 +104,7 @@ namespace CombatForms
         private void EndTurn_Click(object sender, EventArgs e)
         {
             FiniteStateMachine<GameStart>.Instance.ChangeState(GameStart.REST);
-            Combat.Instance.activeParty.activePlaya.EndTurn();
+            Combat.Instance.activePlaya.EndTurn();
             button1.Enabled = true;
             button6.Enabled = true;
             button3.Enabled = true;
@@ -89,22 +114,22 @@ namespace CombatForms
         private void Defend_Click(object sender, EventArgs e)
         {
             FiniteStateMachine<GameStart>.Instance.ChangeState(GameStart.DEFEND);
+            Combat.Instance.activePlaya.Defend();
             button1.Enabled = false;
             button3.Enabled = false;
             button6.Enabled = false;
             button2.Enabled = true;
-            Combat.Instance.activePlaya.Defend();
             EndTurn_Click(sender, e);
         }
         private void Flee_Click(object sender, EventArgs e)
         {
             FiniteStateMachine<GameStart>.Instance.ChangeState(GameStart.FLEE);
+            Combat.Instance.activePlaya.Flee();
             button1.Enabled = false;
             button3.Enabled = false;
             button6.Enabled = false;
             button2.Enabled = true;
             MessageBox.Show(Combat.Instance.activeParty.activePlaya.Name + " has chose to flee!");
-            Combat.Instance.activePlaya.Flee();
             EndTurn_Click(sender, e);
             UpdateHub();
         }
@@ -119,5 +144,7 @@ namespace CombatForms
             //FSM = DataManager<FiniteStateMachine<GameStart>>.Deserialize("Test");
             //this.richTextBox1.Text = "Current State:" + FSM.GetState().Name;
         }
+
+
     }
 }

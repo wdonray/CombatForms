@@ -43,13 +43,14 @@
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.progressBar3 = new System.Windows.Forms.ProgressBar();
             this.progressBar4 = new System.Windows.Forms.ProgressBar();
+            this.Active = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(123, 284);
+            this.button1.Location = new System.Drawing.Point(109, 253);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(112, 38);
             this.button1.TabIndex = 0;
             this.button1.Text = "Attack";
             this.button1.UseVisualStyleBackColor = true;
@@ -57,7 +58,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(251, 319);
+            this.button2.Location = new System.Drawing.Point(256, 309);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
@@ -67,9 +68,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(381, 284);
+            this.button3.Location = new System.Drawing.Point(367, 253);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(112, 38);
             this.button3.TabIndex = 2;
             this.button3.Text = "Defend";
             this.button3.UseVisualStyleBackColor = true;
@@ -77,7 +78,8 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox1.BackColor = System.Drawing.Color.Firebrick;
+            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox1.Location = new System.Drawing.Point(568, 25);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(333, 472);
@@ -107,9 +109,9 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(251, 284);
+            this.button6.Location = new System.Drawing.Point(237, 253);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.Size = new System.Drawing.Size(112, 38);
             this.button6.TabIndex = 6;
             this.button6.Text = "Flee";
             this.button6.UseVisualStyleBackColor = true;
@@ -117,6 +119,8 @@
             // 
             // richTextBox2
             // 
+            this.richTextBox2.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.richTextBox2.Font = new System.Drawing.Font("Lucida Handwriting", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox2.Location = new System.Drawing.Point(12, 27);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(186, 20);
@@ -126,6 +130,8 @@
             // 
             // richTextBox3
             // 
+            this.richTextBox3.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.richTextBox3.Font = new System.Drawing.Font("Lucida Handwriting", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox3.Location = new System.Drawing.Point(12, 113);
             this.richTextBox3.Name = "richTextBox3";
             this.richTextBox3.Size = new System.Drawing.Size(186, 20);
@@ -135,6 +141,8 @@
             // 
             // richTextBox4
             // 
+            this.richTextBox4.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.richTextBox4.Font = new System.Drawing.Font("Lucida Handwriting", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox4.Location = new System.Drawing.Point(381, 27);
             this.richTextBox4.Name = "richTextBox4";
             this.richTextBox4.Size = new System.Drawing.Size(181, 20);
@@ -144,6 +152,8 @@
             // 
             // richTextBox5
             // 
+            this.richTextBox5.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.richTextBox5.Font = new System.Drawing.Font("Lucida Handwriting", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox5.Location = new System.Drawing.Point(381, 113);
             this.richTextBox5.Name = "richTextBox5";
             this.richTextBox5.Size = new System.Drawing.Size(181, 20);
@@ -189,11 +199,23 @@
             this.progressBar4.Value = 100;
             this.progressBar4.Click += new System.EventHandler(this.progressBar4_Click);
             // 
+            // Active
+            // 
+            this.Active.BackColor = System.Drawing.Color.Firebrick;
+            this.Active.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Active.Location = new System.Drawing.Point(196, 82);
+            this.Active.Name = "Active";
+            this.Active.Size = new System.Drawing.Size(188, 24);
+            this.Active.TabIndex = 15;
+            this.Active.Text = "";
+            this.Active.TextChanged += new System.EventHandler(this.richTextBox6_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(906, 509);
+            this.Controls.Add(this.Active);
             this.Controls.Add(this.progressBar4);
             this.Controls.Add(this.progressBar3);
             this.Controls.Add(this.progressBar2);
@@ -233,6 +255,7 @@
         private System.Windows.Forms.ProgressBar progressBar2;
         private System.Windows.Forms.ProgressBar progressBar3;
         private System.Windows.Forms.ProgressBar progressBar4;
+        private System.Windows.Forms.RichTextBox Active;
     }
 }
 

@@ -34,21 +34,21 @@ namespace CombatForms
         {
             Random rand = new Random();
             Random rBlock = new Random();
-            float f = (float)(rBlock.NextDouble() * (6d - 1d) + 1d);
-            if (d.isBlocking)
+            //float f = (float)(rBlock.NextDouble() * (6d - 1d) + 1d);
+            if (d.isBlocking == false)
             {
-                d.isBlocking = false;
-                float damage = rand.Next(10 - (int)f, 16 - (int)f);
-                Combat.Instance.combatLog += this.Name + " attacking "
-                    + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine;
+                int damage = rand.Next(10, 16);
                 d.TakeDamage(damage);
+                Combat.Instance.combatLog += this.Name + " is attacking "
+                    + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine;
             }
-            else
+            else if (d.isBlocking == true)
             {
-                float damage = rand.Next(10, 16);
-                d.TakeDamage(rand.Next(10, 16));
-                Combat.Instance.combatLog += this.Name + " attacking "
-                   + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine;
+                float damageB = rand.Next(5, 10);
+                d.TakeDamage(damageB);
+                Combat.Instance.combatLog += this.Name + " is attacking "
+                   + (d as Entity).Name + "(Blocked some damage)" + " for " + damageB.ToString() + " damage!" + Environment.NewLine;
+                d.isBlocking = false;
             }
         }
         /// <summary>
@@ -68,7 +68,7 @@ namespace CombatForms
         {
             if (onEndTurn != null)
                 onEndTurn.Invoke();
-            Combat.Instance.combatLog += ("Active Player: " + this.Name + Environment.NewLine + "\n");
+            //Combat.Instance.combatLog += ("Active Player: " + this.Name + Environment.NewLine + "\n");
         }
         /// <summary>
         /// 
@@ -77,14 +77,26 @@ namespace CombatForms
         {
             Random random = new Random();
             int target = random.Next(0, (Combat.Instance.CombatPartyMembers.Count / 2));
-
             if (this.eType == EType.ENEMY)
             {
-                DoDamage(Combat.Instance.playerParty.members[target]);
+                if (Combat.Instance.playerParty.members[target].Alive == true)
+                    DoDamage(Combat.Instance.playerParty.members[target]);
+                else
+                {
+                    target = random.Next(0, (Combat.Instance.CombatPartyMembers.Count / 2));
+                    DoDamage(Combat.Instance.playerParty.members[target]);
+                }
+
             }
-            if (this.eType == EType.PLAYER)
+            else if (this.eType == EType.PLAYER)
             {
-                DoDamage(Combat.Instance.enemyParty.members[target]);
+                if (Combat.Instance.enemyParty.members[target].Alive == true)
+                    DoDamage(Combat.Instance.enemyParty.members[target]);
+                else
+                {
+                    target = random.Next(0, (Combat.Instance.CombatPartyMembers.Count / 2));
+                    DoDamage(Combat.Instance.enemyParty.members[target]);
+                }
             }
         }
         /// <summary>

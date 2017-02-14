@@ -16,7 +16,7 @@ namespace CombatForms
         public Party enemyParty = new Party();
         private List<Party> combatParty = new List<Party>();
         private List<Entity> combatPartyMembers = new List<Entity>();
-        private Entity m_activePlaya;
+        //private Entity m_activePlaya;
         public string combatLog;
         private static Combat instance = null;
         public static Combat Instance
@@ -34,7 +34,7 @@ namespace CombatForms
         {
             get
             {
-                combatLog += activeParty.activePlaya.Name + Environment.NewLine;
+                //combatLog += activeParty.activePlaya.Name + Environment.NewLine;
                 return activeParty.activePlaya;
             }
         }
