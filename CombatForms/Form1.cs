@@ -128,16 +128,5 @@ namespace CombatForms
             EndTurn_Click(sender, e);
             UpdateHub();
         }
-        private void Save_Click(object sender, EventArgs e)
-        {
-            UpdateHub();
-            //DataManager<FiniteStateMachine<GameStart>>.Serialize("Test", FSM);
-        }
-        private void Load_Click(object sender, EventArgs e)
-        {
-            UpdateHub();
-            //FSM = DataManager<FiniteStateMachine<GameStart>>.Deserialize("Test");
-            //this.richTextBox1.Text = "Current State:" + FSM.GetState().Name;
-        }
     }
 }
