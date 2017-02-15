@@ -17,24 +17,22 @@ namespace CombatForms
         }
         public EType eType;
         public Entity() { }
-        public Entity(float h, string n, bool a, bool b, float s, EType e)
+        public Entity(float health, string name, bool alive, bool block, float speed, EType e)
         {
-            m_Health = h;
-            m_Name = n;
-            m_Alive = a;
-            m_Speed = s;
-            m_Block = b;
+            m_Health = health;
+            m_Name = name;
+            m_Alive = alive;
+            m_Speed = speed;
+            m_Block = block;
             eType = e;
         }
         /// <summary>
-        /// 
+        /// Does damage based on if the selected target is blocking or not and adds log to combatLog
         /// </summary>
         /// <param name="d"></param>
         public void DoDamage(IDamageable d)
         {
             Random rand = new Random();
-            Random rBlock = new Random();
-            //float f = (float)(rBlock.NextDouble() * (6d - 1d) + 1d);
             if (d.isBlocking == false)
             {
                 float damage = rand.Next(10, 16);
@@ -52,14 +50,17 @@ namespace CombatForms
             }
         }
         /// <summary>
-        /// 
+        /// Sets a selected entity to set damage
         /// </summary>
         /// <param name="f"></param>
         public void TakeDamage(float f)
         {
             m_Health -= f;
             if (m_Health <= 0)
+            {
                 m_Alive = false;
+                m_Health = 0;
+            }
         }
         /// <summary>
         /// Invokes the end turn delegate
@@ -104,7 +105,7 @@ namespace CombatForms
         /// </summary>
         public void Flee()
         {
-            Combat.Instance.activeParty.activePlaya.TakeDamage(Combat.Instance.activeParty.activePlaya.Health);
+            Combat.Instance.activeParty.activePlayer.TakeDamage(Combat.Instance.activeParty.activePlayer.Health);
             Combat.Instance.combatLog += this.Name + " fleed the battle but tripped and died! " + Environment.NewLine;
         }
         /// <summary>
@@ -112,7 +113,7 @@ namespace CombatForms
         /// </summary>
         public void Defend()
         {
-            Combat.Instance.activeParty.activePlaya.isBlocking = true;
+            Combat.Instance.activeParty.activePlayer.isBlocking = true;
             Combat.Instance.combatLog += this.Name + " prepared a block! " + Environment.NewLine;
         }
         private float m_Health;

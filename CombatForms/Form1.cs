@@ -13,6 +13,11 @@ namespace CombatForms
 {
     public partial class Form1 : Form
     {
+        List<RichTextBox> playersText = new List<RichTextBox>();
+        List<RichTextBox> enemiesText = new List<RichTextBox>();
+
+        List<ProgressBar> playerProgess = new List<ProgressBar>();
+        List<ProgressBar> enemiesProgess = new List<ProgressBar>();
         public void UpdateHub()
         {
             for (int i = 0; i < Combat.Instance.playerParty.members.Count; i++)
@@ -35,19 +40,18 @@ namespace CombatForms
                     m++;
             if (d >= Combat.Instance.enemyParty.members.Count || m >= Combat.Instance.playerParty.members.Count)
             {
+                if (d >= Combat.Instance.enemyParty.members.Count)
+                    MessageBox.Show("Winning Party: 1");
+                else if (m >= Combat.Instance.playerParty.members.Count)
+                    MessageBox.Show("Winning Party: 2");
                 this.Close();
                 return;
             }
             richTextBox1.Text = Combat.Instance.combatLog;
             richTextBox1.SelectionStart = richTextBox1.Text.Length;
             richTextBox1.ScrollToCaret();
-            Active.Text = ("Active Player: " + Combat.Instance.activeParty.activePlaya.Name);
+            Active.Text = ("Active Player: " + Combat.Instance.activeParty.activePlayer.Name);
         }
-        List<RichTextBox> playersText = new List<RichTextBox>();
-        List<RichTextBox> enemiesText = new List<RichTextBox>();
-
-        List<ProgressBar> playerProgess = new List<ProgressBar>();
-        List<ProgressBar> enemiesProgess = new List<ProgressBar>();
         public Form1()
         {
             InitializeComponent();
@@ -65,7 +69,6 @@ namespace CombatForms
             UpdateHub();
             button2.Enabled = false;
             button2.Visible = false;
-
         }
         #region Text Box and Health Bar
         private void Form1_Load(object sender, EventArgs e) { }
@@ -121,7 +124,7 @@ namespace CombatForms
             button3.Enabled = false;
             button6.Enabled = false;
             button2.Enabled = true;
-            MessageBox.Show(Combat.Instance.activeParty.activePlaya.Name + " has chose to flee!");
+            MessageBox.Show(Combat.Instance.activeParty.activePlayer.Name + " has chose to flee!");
             EndTurn_Click(sender, e);
             UpdateHub();
         }
@@ -136,7 +139,5 @@ namespace CombatForms
             //FSM = DataManager<FiniteStateMachine<GameStart>>.Deserialize("Test");
             //this.richTextBox1.Text = "Current State:" + FSM.GetState().Name;
         }
-
-
     }
 }

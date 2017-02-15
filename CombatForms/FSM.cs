@@ -90,7 +90,7 @@ namespace CombatForms
                 currentState.onEnter.Invoke();
         }
         /// <summary>
-        /// 
+        /// Returns a state with the name passed to it
         /// </summary>
         /// <param name="e"></param>
         /// <returns></returns>

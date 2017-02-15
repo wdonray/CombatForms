@@ -11,8 +11,12 @@ namespace CombatForms
     public class Party
     {
         public Party() { }
-        public Entity activePlaya;
+
+        int currentID = 0;
+
+        public Entity activePlayer;
         private List<Entity> players = new List<Entity>();
+
         public delegate void OnPartyEnd();
         public OnPartyEnd onPartyEnd;
         public List<Entity> members
@@ -25,19 +29,18 @@ namespace CombatForms
         /// <summary>
         /// Function to set the next player in the list to be the active player
         /// </summary>
-        int currentID = 0;
         public void GetNext()
         {
             if (currentID >= players.Count - 1)
             {
                 currentID = 0;
-                activePlaya = players[currentID];
+                activePlayer = players[currentID];
                 if (onPartyEnd != null)
                     onPartyEnd.Invoke();
                 return;
             }
             currentID++;
-            activePlaya = players[currentID];    
+            activePlayer = players[currentID];    
         }
         /// <summary>
         /// Bool to check if you can go to the next player
@@ -50,10 +53,10 @@ namespace CombatForms
             {
                 if (i == players.Count - 1)
                 {
-                    activePlaya = players[0];
+                    activePlayer = players[0];
                     return false;
                 }
-                else if (p == activePlaya)
+                else if (p == activePlayer)
                 {
                     return true;
                 }
@@ -79,10 +82,13 @@ namespace CombatForms
             p.onEndTurn += GetNext;
             Sort();
         }
+        /// <summary>
+        /// Sorts the player by speed
+        /// </summary>
         public void Sort()
         {
             players.Sort((x, y) => -1 * x.Speed.CompareTo(y.Speed));
-            activePlaya = players[currentID];
+            activePlayer = players[currentID];
         }
     }
 }

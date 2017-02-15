@@ -9,15 +9,23 @@ namespace CombatForms
     public class Combat
     {
         public Combat() { }
+
         public Party activeParty;
         public Party inactiveParty;
 
         public Party playerParty = new Party();
         public Party enemyParty = new Party();
+        /// <summary>
+        /// List of parties
+        /// </summary>
         private List<Party> combatParty = new List<Party>();
+        /// <summary>
+        /// List of all the entities
+        /// </summary>
         private List<Entity> combatPartyMembers = new List<Entity>();
-        //private Entity m_activePlaya;
+
         public string combatLog;
+
         private static Combat instance = null;
         public static Combat Instance
         {
@@ -34,8 +42,7 @@ namespace CombatForms
         {
             get
             {
-                //combatLog += activeParty.activePlaya.Name + Environment.NewLine;
-                return activeParty.activePlaya;
+                return activeParty.activePlayer;
             }
         }
         public List<Party> CombatParty
@@ -69,18 +76,26 @@ namespace CombatForms
             }
             p.onPartyEnd += NextParty;
         }
+        /// <summary>
+        /// Add the selcted entity to enemy Party and the CombatPartyMembers List
+        /// </summary>
+        /// <param name="e"></param>
         public void AddEnemyParty(Entity e)
         {
             enemyParty.AddPlayer(e);
             combatPartyMembers.Add(e);
         }
+        /// <summary>
+        /// Add the selcted entity to player Party and the CombatPartyMembers List
+        /// </summary>
+        /// <param name="e"></param>
         public void AddPlayerParty(Entity e)
         {
             playerParty.AddPlayer(e);
             combatPartyMembers.Add(e);
         }
         /// <summary>
-        /// Function to go to the next Party
+        /// Function to go to the next Party 
         /// </summary>
         public void NextParty()
         {
@@ -100,7 +115,9 @@ namespace CombatForms
                 }
                 i++;
             }
-            while (activeParty.activePlaya.Alive == false)
+
+            //If the active player is dead call the GetNext function
+            while (activeParty.activePlayer.Alive == false)
             {
                 activeParty.GetNext();
             }
