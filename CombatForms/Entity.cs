@@ -102,25 +102,14 @@ namespace CombatForms
         /// <summary>
         /// 
         /// </summary>
-        public void Kill()
-        {
-            if (Combat.Instance.activeParty.activePlaya.Health <= 100)
-                Combat.Instance.activeParty.activePlaya.TakeDamage(Combat.Instance.activeParty.activePlaya.Health);
-            Combat.Instance.activeParty.activePlaya.Alive = false;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
         public void Flee()
         {
-            if (Combat.Instance.activeParty.activePlaya.Name == "Cloud")
-                Kill();
-            else if (Combat.Instance.activeParty.activePlaya.Name == "Aeris the Archer")
-                Kill();
-            else if (Combat.Instance.activeParty.activePlaya.Name == "Dwarf Soldier")
-                Kill();
-            else if (Combat.Instance.activeParty.activePlaya.Name == "Dwarf Archer")
-                Kill();
+            if (this.eType == EType.ENEMY || this.eType == EType.PLAYER)
+            {
+                if (Combat.Instance.activeParty.activePlaya.Health <= 100)
+                    Combat.Instance.activeParty.activePlaya.TakeDamage(Combat.Instance.activeParty.activePlaya.Health);
+                Combat.Instance.activeParty.activePlaya.Alive = false;
+            }
         }
         /// <summary>
         /// 

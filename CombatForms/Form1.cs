@@ -119,6 +119,7 @@ namespace CombatForms
             button3.Enabled = false;
             button6.Enabled = false;
             button2.Enabled = true;
+            UpdateHub();
             EndTurn_Click(sender, e);
         }
         private void Flee_Click(object sender, EventArgs e)
