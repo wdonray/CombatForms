@@ -100,6 +100,10 @@ namespace CombatForms
                 }
                 i++;
             }
+            while (activeParty.activePlaya.Alive == false)
+            {
+                activeParty.GetNext();
+            }
         }
     }
 }

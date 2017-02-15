@@ -12,6 +12,7 @@ namespace CombatForms
     {
         public Party() { }
         public Entity activePlaya;
+        private List<Entity> players = new List<Entity>();
         public delegate void OnPartyEnd();
         public OnPartyEnd onPartyEnd;
         public List<Entity> members
@@ -36,8 +37,7 @@ namespace CombatForms
                 return;
             }
             currentID++;
-            activePlaya = players[currentID];
-
+            activePlaya = players[currentID];    
         }
         /// <summary>
         /// Bool to check if you can go to the next player
@@ -71,20 +71,19 @@ namespace CombatForms
             if (players.Count <= currentID)
             {
                 players.Add(p);
-                
+
                 p.onEndTurn += GetNext;
                 return;
             }
             players.Add(p);
             p.onEndTurn += GetNext;
-            Sort();  
+            Sort();
         }
         public void Sort()
         {
             players.Sort((x, y) => -1 * x.Speed.CompareTo(y.Speed));
             activePlaya = players[currentID];
         }
-        private List<Entity> players = new List<Entity>();
     }
 }
 

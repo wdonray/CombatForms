@@ -37,7 +37,7 @@ namespace CombatForms
             //float f = (float)(rBlock.NextDouble() * (6d - 1d) + 1d);
             if (d.isBlocking == false)
             {
-                int damage = rand.Next(10, 16);
+                float damage = rand.Next(10, 16);
                 d.TakeDamage(damage);
                 Combat.Instance.combatLog += this.Name + " is attacking "
                     + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine;
@@ -62,16 +62,15 @@ namespace CombatForms
                 m_Alive = false;
         }
         /// <summary>
-        /// 
+        /// Invokes the end turn delegate
         /// </summary>
         public void EndTurn()
         {
             if (onEndTurn != null)
                 onEndTurn.Invoke();
-            //Combat.Instance.combatLog += ("Active Player: " + this.Name + Environment.NewLine + "\n");
         }
         /// <summary>
-        /// 
+        /// Checks the current eType and attacks a random opposing target
         /// </summary>
         public void Attack()
         {
@@ -81,45 +80,41 @@ namespace CombatForms
             {
                 if (Combat.Instance.playerParty.members[target].Alive == true)
                     DoDamage(Combat.Instance.playerParty.members[target]);
-                else
+                else if (Combat.Instance.playerParty.members[target].Alive == false)
                 {
                     target = random.Next(0, (Combat.Instance.CombatPartyMembers.Count / 2));
-                    DoDamage(Combat.Instance.playerParty.members[target]);
+                    if (Combat.Instance.playerParty.members[target].Alive == true)
+                        DoDamage(Combat.Instance.playerParty.members[target]);
                 }
-
             }
             else if (this.eType == EType.PLAYER)
             {
                 if (Combat.Instance.enemyParty.members[target].Alive == true)
                     DoDamage(Combat.Instance.enemyParty.members[target]);
-                else
+                else if (Combat.Instance.enemyParty.members[target].Alive == false)
                 {
                     target = random.Next(0, (Combat.Instance.CombatPartyMembers.Count / 2));
-                    DoDamage(Combat.Instance.enemyParty.members[target]);
+                    if (Combat.Instance.enemyParty.members[target].Alive == true)
+                        DoDamage(Combat.Instance.enemyParty.members[target]);
                 }
             }
         }
         /// <summary>
-        /// 
+        /// Sets the current player to take its remaining HP as damage
         /// </summary>
         public void Flee()
         {
-            if (this.eType == EType.ENEMY || this.eType == EType.PLAYER)
-            {
-                if (Combat.Instance.activeParty.activePlaya.Health <= 100)
-                    Combat.Instance.activeParty.activePlaya.TakeDamage(Combat.Instance.activeParty.activePlaya.Health);
-                Combat.Instance.activeParty.activePlaya.Alive = false;
-            }
+            Combat.Instance.activeParty.activePlaya.TakeDamage(Combat.Instance.activeParty.activePlaya.Health);
+            Combat.Instance.combatLog += this.Name + " fleed the battle but tripped and died! " + Environment.NewLine;
         }
         /// <summary>
-        /// 
+        /// Sets the current player boolean (isBlocking) to true and adds text to the combatLog String
         /// </summary>
         public void Defend()
         {
             Combat.Instance.activeParty.activePlaya.isBlocking = true;
             Combat.Instance.combatLog += this.Name + " prepared a block! " + Environment.NewLine;
         }
-
         private float m_Health;
         private string m_Name;
         private bool m_Alive;

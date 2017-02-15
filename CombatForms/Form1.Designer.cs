@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.button4 = new System.Windows.Forms.Button();
@@ -44,11 +43,12 @@
             this.progressBar3 = new System.Windows.Forms.ProgressBar();
             this.progressBar4 = new System.Windows.Forms.ProgressBar();
             this.Active = new System.Windows.Forms.RichTextBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(109, 253);
+            this.button1.Location = new System.Drawing.Point(109, 299);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(112, 38);
             this.button1.TabIndex = 0;
@@ -56,19 +56,9 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Attack_Click);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(256, 309);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "End Turn";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.EndTurn_Click);
-            // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(367, 253);
+            this.button3.Location = new System.Drawing.Point(367, 299);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(112, 38);
             this.button3.TabIndex = 2;
@@ -109,7 +99,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(237, 253);
+            this.button6.Location = new System.Drawing.Point(237, 299);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(112, 38);
             this.button6.TabIndex = 6;
@@ -143,7 +133,7 @@
             // 
             this.richTextBox4.BackColor = System.Drawing.SystemColors.HotTrack;
             this.richTextBox4.Font = new System.Drawing.Font("Lucida Handwriting", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox4.Location = new System.Drawing.Point(381, 27);
+            this.richTextBox4.Location = new System.Drawing.Point(385, 27);
             this.richTextBox4.Name = "richTextBox4";
             this.richTextBox4.Size = new System.Drawing.Size(181, 20);
             this.richTextBox4.TabIndex = 9;
@@ -156,7 +146,7 @@
             this.richTextBox5.Font = new System.Drawing.Font("Lucida Handwriting", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox5.Location = new System.Drawing.Point(381, 113);
             this.richTextBox5.Name = "richTextBox5";
-            this.richTextBox5.Size = new System.Drawing.Size(181, 20);
+            this.richTextBox5.Size = new System.Drawing.Size(185, 20);
             this.richTextBox5.TabIndex = 10;
             this.richTextBox5.Text = "";
             this.richTextBox5.TextChanged += new System.EventHandler(this.richTextBox5_TextChanged);
@@ -181,7 +171,7 @@
             // 
             // progressBar3
             // 
-            this.progressBar3.Location = new System.Drawing.Point(381, 139);
+            this.progressBar3.Location = new System.Drawing.Point(385, 53);
             this.progressBar3.Name = "progressBar3";
             this.progressBar3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.progressBar3.Size = new System.Drawing.Size(181, 23);
@@ -191,7 +181,7 @@
             // 
             // progressBar4
             // 
-            this.progressBar4.Location = new System.Drawing.Point(381, 53);
+            this.progressBar4.Location = new System.Drawing.Point(381, 139);
             this.progressBar4.Name = "progressBar4";
             this.progressBar4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.progressBar4.Size = new System.Drawing.Size(185, 23);
@@ -209,6 +199,16 @@
             this.Active.TabIndex = 15;
             this.Active.Text = "";
             this.Active.TextChanged += new System.EventHandler(this.richTextBox6_TextChanged);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(264, 474);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "End Turn";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.EndTurn_Click);
             // 
             // Form1
             // 
@@ -241,7 +241,6 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button button4;
@@ -256,6 +255,7 @@
         private System.Windows.Forms.ProgressBar progressBar3;
         private System.Windows.Forms.ProgressBar progressBar4;
         private System.Windows.Forms.RichTextBox Active;
+        private System.Windows.Forms.Button button2;
     }
 }
 

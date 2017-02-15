@@ -18,37 +18,26 @@ namespace CombatForms
             for (int i = 0; i < Combat.Instance.playerParty.members.Count; i++)
             {
                 playersText[i].Text = Combat.Instance.playerParty.members[i].Name;
-
-                if ((int)Combat.Instance.playerParty.members[i].Health != 0)
-                    playerProgess[i].Value = (int)Combat.Instance.playerParty.members[i].Health;
-
-                else if ((int)Combat.Instance.playerParty.members[i].Health <= 0)
-                {
-                    playerProgess[i].Value = 0;
-                    Combat.Instance.playerParty.members[i].Health = 0;
-                }
-
-                //    if (Combat.Instance.playerParty.members.Count == 0)
-                //        this.Close();
+                playerProgess[i].Value = (int)Combat.Instance.playerParty.members[i].Health;
             }
-
             for (int i = 0; i < Combat.Instance.enemyParty.members.Count; i++)
             {
                 enemiesText[i].Text = Combat.Instance.enemyParty.members[i].Name;
-
-                if ((int)Combat.Instance.enemyParty.members[i].Health != 0)
-                    enemiesProgess[i].Value = (int)Combat.Instance.enemyParty.members[i].Health;
-
-                else if ((int)Combat.Instance.enemyParty.members[i].Health <= 0)
-                {
-                    enemiesProgess[i].Value = 0;
-                    Combat.Instance.enemyParty.members[i].Health = 0;
-                }
-
-                //if (Combat.Instance.enemyParty.members[i].Alive == false)
-                //    this.Close();
+                enemiesProgess[i].Value = (int)Combat.Instance.enemyParty.members[i].Health;
             }
-
+            int d = 0;
+            int m = 0;
+            foreach (Entity e in Combat.Instance.enemyParty.members)
+                if (!e.Alive)
+                    d++;
+            foreach (Entity e in Combat.Instance.playerParty.members)
+                if (!e.Alive)
+                    m++;
+            if (d >= Combat.Instance.enemyParty.members.Count || m >= Combat.Instance.playerParty.members.Count)
+            {
+                this.Close();
+                return;
+            }
             richTextBox1.Text = Combat.Instance.combatLog;
             richTextBox1.SelectionStart = richTextBox1.Text.Length;
             richTextBox1.ScrollToCaret();
@@ -75,6 +64,8 @@ namespace CombatForms
 
             UpdateHub();
             button2.Enabled = false;
+            button2.Visible = false;
+
         }
         #region Text Box and Health Bar
         private void Form1_Load(object sender, EventArgs e) { }
