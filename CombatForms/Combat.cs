@@ -118,11 +118,27 @@ namespace CombatForms
                 i++;
             }
 
+            //for (int x = 0; x < Combat.Instance.playerParty.members.Count; x++)
+            //{
+            //    if (Combat.Instance.playerParty.members[i].Alive == true)
+            //    {
+            //        activeParty.GetNext();
+            //    }
+            //}
+            //for (int x = 0; x < Combat.Instance.enemyParty.members.Count; x++)
+            //{
+            //    if (Combat.Instance.enemyParty.members[i].Alive == true)
+            //    {
+            //        activeParty.GetNext();
+            //    }
+            //}
+
             //If the active player is dead call the GetNext function
             while (activeParty.activePlayer.Alive == false)
             {
                 activeParty.GetNext();
             }
+
         }
     }
 }

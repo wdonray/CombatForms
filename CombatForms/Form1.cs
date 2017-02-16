@@ -20,6 +20,7 @@ namespace CombatForms
         List<ProgressBar> enemiesProgess = new List<ProgressBar>();
         public void UpdateHub()
         {
+
             if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "ATTACK")
                 Combat.Instance.activePlaya.Attack();
             else if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "REST")
@@ -27,17 +28,14 @@ namespace CombatForms
             else if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "DEFEND")
                 Combat.Instance.activePlaya.Defend();
             else if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "FLEE")
-            { 
+            {
                 Combat.Instance.activePlaya.Flee();
                 MessageBox.Show(Combat.Instance.activeParty.activePlayer.Name + " has chose to flee!");
             }
             for (int i = 0; i < Combat.Instance.playerParty.members.Count; i++)
             {
                 if (Combat.Instance.playerParty.members[i].Alive == false)
-                {
                     playersText[i].Text = "Dead : " + (int)Combat.Instance.playerParty.members[i].Health;
-                    Grave.Text += Combat.Instance.playerParty.members[i].Name + Environment.NewLine;
-                }
                 else
                     playersText[i].Text = Combat.Instance.playerParty.members[i].Name + " : " + (int)Combat.Instance.playerParty.members[i].Health;
                 playerProgess[i].Value = (int)Combat.Instance.playerParty.members[i].Health;
@@ -189,11 +187,6 @@ namespace CombatForms
         private void Exit_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void Grave_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

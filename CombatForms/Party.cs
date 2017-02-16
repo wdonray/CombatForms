@@ -40,7 +40,7 @@ namespace CombatForms
                 return;
             }
             currentID++;
-            activePlayer = players[currentID];    
+            activePlayer = players[currentID];
         }
         /// <summary>
         /// Bool to check if you can go to the next player
