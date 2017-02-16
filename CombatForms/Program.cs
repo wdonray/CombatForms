@@ -44,7 +44,7 @@ namespace CombatForms
             Combat.Instance.AddEnemyParty(entitySoldier);
             Combat.Instance.AddEnemyParty(entityArcher);
 
-            Combat.Instance.CombatPartyMembers.Sort((a, b) => -1 * a.Speed.CompareTo(b.Speed));
+            //Combat.Instance.CombatPartyMembers.Sort((a, b) => -1 * a.Speed.CompareTo(b.Speed));
 
             FiniteStateMachine<GameStart>.Instance.AddState(GameStart.INIT);
             FiniteStateMachine<GameStart>.Instance.AddState(GameStart.ATTACK);
