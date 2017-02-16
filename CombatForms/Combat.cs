@@ -25,6 +25,7 @@ namespace CombatForms
         private List<Entity> combatPartyMembers = new List<Entity>();
 
         public string combatLog;
+        public string entitiesList;
 
         private static Combat instance = null;
         public static Combat Instance

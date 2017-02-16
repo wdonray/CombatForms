@@ -33,19 +33,32 @@ namespace CombatForms
         public void DoDamage(IDamageable d)
         {
             Random rand = new Random();
+            Random crit = new Random();
+            float damage = rand.Next(10, 16);
             if (d.isBlocking == false)
             {
-                float damage = rand.Next(10, 16);
-                d.TakeDamage(damage);
-                Combat.Instance.combatLog += this.Name + " is attacking "
-                    + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine;
+                float critChance = crit.Next(1, 101);
+                //Added a crit chance of 15%
+                if (critChance <= 15)
+                {
+                    damage = damage * 2;
+                    d.TakeDamage(damage);
+                    Combat.Instance.combatLog += this.Name + " is attacking and CRIT "
+                         + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine;
+                }
+                else
+                {
+                    d.TakeDamage(damage);
+                    Combat.Instance.combatLog += this.Name + " is attacking "
+                        + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine;
+                }
             }
             else if (d.isBlocking == true)
             {
-                float damageB = rand.Next(5, 10);
-                d.TakeDamage(damageB);
+                damage = damage / 2;
+                d.TakeDamage(damage);
                 Combat.Instance.combatLog += this.Name + " is attacking "
-                   + (d as Entity).Name + "(Blocked some damage)" + " for " + damageB.ToString() + " damage!" + Environment.NewLine;
+                   + (d as Entity).Name + "(Blocked half the damage)" + " for " + damage.ToString() + " damage!" + Environment.NewLine;
                 d.isBlocking = false;
             }
         }

@@ -31,7 +31,6 @@ namespace CombatForms
                 Combat.Instance.activePlaya.Flee();
                 MessageBox.Show(Combat.Instance.activeParty.activePlayer.Name + " has chose to flee!");
             }
-
             for (int i = 0; i < Combat.Instance.playerParty.members.Count; i++)
             {
                 if (Combat.Instance.playerParty.members[i].Alive == false)
@@ -70,7 +69,6 @@ namespace CombatForms
             richTextBox1.ScrollToCaret();
             Active.Text = ("Active Player: " + Combat.Instance.activeParty.activePlayer.Name);
         }
-
         public Form1()
         {
             InitializeComponent();
@@ -89,6 +87,9 @@ namespace CombatForms
 
             button2.Enabled = false;
             button2.Visible = false;
+            Save.Visible = false;
+            Loader.Visible = false;
+            Exit.Visible = false;
         }
         #region Text Box and Health Bar
         private void Form1_Load(object sender, EventArgs e) { }
@@ -142,6 +143,43 @@ namespace CombatForms
             button2.Enabled = true;
             UpdateHub();
             EndTurn_Click(sender, e);
+        }
+
+        private void Options_Click(object sender, EventArgs e)
+        {
+            Options.Visible = false;
+            Save.Visible = true;
+            Loader.Visible = true;
+            Exit.Visible = true;
+            button1.Enabled = false;
+            button6.Enabled = false;
+            button3.Enabled = false;
+            UpdateHub();
+        }
+
+        private void Save_Click(object sender, EventArgs e)
+        {
+            Save.Visible = false;
+            Loader.Visible = false;
+            Exit.Visible = false;
+            button1.Enabled = true;
+            button6.Enabled = true;
+            button3.Enabled = true;
+        }
+
+        private void Loader_Click(object sender, EventArgs e)
+        {
+            Save.Visible = false;
+            Loader.Visible = false;
+            Exit.Visible = false;
+            button1.Enabled = true;
+            button6.Enabled = true;
+            button3.Enabled = true;
+        }
+
+        private void Exit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -43,6 +43,10 @@
             this.progressBar4 = new System.Windows.Forms.ProgressBar();
             this.Active = new System.Windows.Forms.RichTextBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.Options = new System.Windows.Forms.Button();
+            this.Save = new System.Windows.Forms.Button();
+            this.Loader = new System.Windows.Forms.Button();
+            this.Exit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -192,12 +196,56 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.EndTurn_Click);
             // 
+            // Options
+            // 
+            this.Options.Location = new System.Drawing.Point(823, 647);
+            this.Options.Name = "Options";
+            this.Options.Size = new System.Drawing.Size(75, 23);
+            this.Options.TabIndex = 16;
+            this.Options.Text = "Options";
+            this.Options.UseVisualStyleBackColor = true;
+            this.Options.Click += new System.EventHandler(this.Options_Click);
+            // 
+            // Save
+            // 
+            this.Save.Location = new System.Drawing.Point(196, 337);
+            this.Save.Name = "Save";
+            this.Save.Size = new System.Drawing.Size(162, 61);
+            this.Save.TabIndex = 17;
+            this.Save.Text = "Save";
+            this.Save.UseVisualStyleBackColor = true;
+            this.Save.Click += new System.EventHandler(this.Save_Click);
+            // 
+            // Loader
+            // 
+            this.Loader.Location = new System.Drawing.Point(375, 337);
+            this.Loader.Name = "Loader";
+            this.Loader.Size = new System.Drawing.Size(162, 61);
+            this.Loader.TabIndex = 18;
+            this.Loader.Text = "Load";
+            this.Loader.UseVisualStyleBackColor = true;
+            this.Loader.Click += new System.EventHandler(this.Loader_Click);
+            // 
+            // Exit
+            // 
+            this.Exit.Location = new System.Drawing.Point(545, 337);
+            this.Exit.Name = "Exit";
+            this.Exit.Size = new System.Drawing.Size(162, 61);
+            this.Exit.TabIndex = 19;
+            this.Exit.Text = "Exit";
+            this.Exit.UseVisualStyleBackColor = true;
+            this.Exit.Click += new System.EventHandler(this.Exit_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1264, 682);
+            this.Controls.Add(this.Exit);
+            this.Controls.Add(this.Loader);
+            this.Controls.Add(this.Save);
+            this.Controls.Add(this.Options);
             this.Controls.Add(this.Active);
             this.Controls.Add(this.progressBar4);
             this.Controls.Add(this.progressBar3);
@@ -236,6 +284,10 @@
         private System.Windows.Forms.ProgressBar progressBar4;
         private System.Windows.Forms.RichTextBox Active;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button Options;
+        private System.Windows.Forms.Button Save;
+        private System.Windows.Forms.Button Loader;
+        private System.Windows.Forms.Button Exit;
     }
 }
 
