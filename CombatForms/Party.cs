@@ -43,28 +43,6 @@ namespace CombatForms
             activePlayer = players[currentID];
         }
         /// <summary>
-        /// Bool to check if you can go to the next player
-        /// </summary>
-        /// <returns></returns>
-        public bool CanNextActivePlaya()
-        {
-            int i = 0;
-            foreach (Entity p in players)
-            {
-                if (i == players.Count - 1)
-                {
-                    activePlayer = players[0];
-                    return false;
-                }
-                else if (p == activePlayer)
-                {
-                    return true;
-                }
-                i++;
-            }
-            return false;
-        }
-        /// <summary>
         /// Function to be able to create a player and add it to a party
         /// </summary>
         /// <param name="p"></param>
@@ -74,7 +52,7 @@ namespace CombatForms
             if (players.Count <= currentID)
             {
                 players.Add(p);
-
+                activePlayer = players[currentID];
                 p.onEndTurn += GetNext;
                 return;
             }
