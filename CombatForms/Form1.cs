@@ -11,7 +11,7 @@ using System.Threading;
 using System.Diagnostics;
 namespace CombatForms
 {
-    public partial class Form1 : Form
+    public partial class WaterEmblem : Form
     {
         List<RichTextBox> playersText = new List<RichTextBox>();
         List<RichTextBox> enemiesText = new List<RichTextBox>();
@@ -27,7 +27,7 @@ namespace CombatForms
             else if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "DEFEND")
                 Combat.Instance.activePlaya.Defend();
             else if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "FLEE")
-            {
+            { 
                 Combat.Instance.activePlaya.Flee();
                 MessageBox.Show(Combat.Instance.activeParty.activePlayer.Name + " has chose to flee!");
             }
@@ -69,7 +69,7 @@ namespace CombatForms
             richTextBox1.ScrollToCaret();
             Active.Text = ("Active Player: " + Combat.Instance.activeParty.activePlayer.Name);
         }
-        public Form1()
+        public WaterEmblem()
         {
             InitializeComponent();
 
@@ -90,6 +90,7 @@ namespace CombatForms
             Save.Visible = false;
             Loader.Visible = false;
             Exit.Visible = false;
+            Combat.Instance.combatLog += Combat.Instance.Space;
         }
         #region Text Box and Health Bar
         private void Form1_Load(object sender, EventArgs e) { }
@@ -165,6 +166,8 @@ namespace CombatForms
             button1.Enabled = true;
             button6.Enabled = true;
             button3.Enabled = true;
+            Combat test = new Combat();
+            DataManager<Combat>.Serialize("Test", test);
         }
 
         private void Loader_Click(object sender, EventArgs e)
@@ -175,6 +178,7 @@ namespace CombatForms
             button1.Enabled = true;
             button6.Enabled = true;
             button3.Enabled = true;
+            Combat work = DataManager<Combat>.Deserialize("Test");
         }
 
         private void Exit_Click(object sender, EventArgs e)

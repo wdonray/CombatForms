@@ -15,6 +15,7 @@ namespace CombatForms
 
         public Party playerParty = new Party();
         public Party enemyParty = new Party();
+        public string Space = "-------------------------------------------------------------";
         /// <summary>
         /// List of parties
         /// </summary>

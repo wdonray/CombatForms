@@ -26,6 +26,7 @@ namespace CombatForms
             m_Block = block;
             eType = e;
         }
+        public string Space = "-------------------------------------------------------------";
         /// <summary>
         /// Does damage based on if the selected target is blocking or not and adds log to combatLog
         /// </summary>
@@ -44,13 +45,14 @@ namespace CombatForms
                     damage = damage * 2;
                     d.TakeDamage(damage);
                     Combat.Instance.combatLog += this.Name + " is attacking and CRIT "
-                         + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine;
+                         + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
                 }
+
                 else
                 {
                     d.TakeDamage(damage);
                     Combat.Instance.combatLog += this.Name + " is attacking "
-                        + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine;
+                        + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
                 }
             }
             else if (d.isBlocking == true)
@@ -58,7 +60,7 @@ namespace CombatForms
                 damage = damage / 2;
                 d.TakeDamage(damage);
                 Combat.Instance.combatLog += this.Name + " is attacking "
-                   + (d as Entity).Name + "(Blocked half the damage)" + " for " + damage.ToString() + " damage!" + Environment.NewLine;
+                   + (d as Entity).Name + "(Blocked half the damage)" + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
                 d.isBlocking = false;
             }
         }
@@ -73,7 +75,7 @@ namespace CombatForms
             {
                 m_Alive = false;
                 m_Health = 0;
-                Combat.Instance.combatLog += this.Name + " has died" + Environment.NewLine;
+                Combat.Instance.combatLog += this.Name + " has died" + Environment.NewLine + Space + Environment.NewLine;
             }
         }
         /// <summary>
@@ -90,28 +92,23 @@ namespace CombatForms
         public void Attack()
         {
             Random random = new Random();
-            int target = random.Next(0, (Combat.Instance.CombatPartyMembers.Count / 2));
+            int targetP = random.Next(0, (Combat.Instance.playerParty.members.Count));
+            int targetE = random.Next(0, (Combat.Instance.enemyParty.members.Count));
             if (this.eType == EType.ENEMY && Combat.Instance.activeParty.activePlayer.Alive == true)
             {
-                if (Combat.Instance.playerParty.members[target].Alive == true)
-                    DoDamage(Combat.Instance.playerParty.members[target]);
-                else if (Combat.Instance.playerParty.members[target].Alive == false)
+                do
                 {
-                    target = random.Next(0, (Combat.Instance.CombatPartyMembers.Count / 2));
-                    if (Combat.Instance.playerParty.members[target].Alive == true)
-                        DoDamage(Combat.Instance.playerParty.members[target]);
-                }
+                    targetP = random.Next(0, (Combat.Instance.playerParty.members.Count));
+                } while (Combat.Instance.playerParty.members[targetP].Alive == false);
+                DoDamage(Combat.Instance.playerParty.members[targetP]);
             }
             else if (this.eType == EType.PLAYER && Combat.Instance.activeParty.activePlayer.Alive == true)
             {
-                if (Combat.Instance.enemyParty.members[target].Alive == true)
-                    DoDamage(Combat.Instance.enemyParty.members[target]);
-                else if (Combat.Instance.enemyParty.members[target].Alive == false)
+                do
                 {
-                    target = random.Next(0, (Combat.Instance.CombatPartyMembers.Count / 2));
-                    if (Combat.Instance.enemyParty.members[target].Alive == true)
-                        DoDamage(Combat.Instance.enemyParty.members[target]);
-                }
+                    targetE = random.Next(0, (Combat.Instance.enemyParty.members.Count));
+                } while (Combat.Instance.enemyParty.members[targetE].Alive == false);
+                DoDamage(Combat.Instance.enemyParty.members[targetE]);
             }
         }
         /// <summary>
@@ -120,7 +117,6 @@ namespace CombatForms
         public void Flee()
         {
             Combat.Instance.activeParty.activePlayer.TakeDamage(Combat.Instance.activeParty.activePlayer.Health);
-            Combat.Instance.combatLog += this.Name + " fleed the battle but tripped and died! " + Environment.NewLine;
         }
         /// <summary>
         /// Sets the current player boolean (isBlocking) to true and adds text to the combatLog String
@@ -128,7 +124,7 @@ namespace CombatForms
         public void Defend()
         {
             Combat.Instance.activeParty.activePlayer.isBlocking = true;
-            Combat.Instance.combatLog += this.Name + " prepared a block! " + Environment.NewLine;
+            Combat.Instance.combatLog += this.Name + " prepared a block! " + Environment.NewLine + Space + Environment.NewLine;
         }
         private float m_Health;
         private string m_Name;
