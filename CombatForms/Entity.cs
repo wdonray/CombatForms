@@ -60,6 +60,7 @@ namespace CombatForms
             {
                 m_Alive = false;
                 m_Health = 0;
+                Combat.Instance.combatLog += this.Name + " has died" + Environment.NewLine;
             }
         }
         /// <summary>
@@ -77,7 +78,7 @@ namespace CombatForms
         {
             Random random = new Random();
             int target = random.Next(0, (Combat.Instance.CombatPartyMembers.Count / 2));
-            if (this.eType == EType.ENEMY)
+            if (this.eType == EType.ENEMY && Combat.Instance.activeParty.activePlayer.Alive == true)
             {
                 if (Combat.Instance.playerParty.members[target].Alive == true)
                     DoDamage(Combat.Instance.playerParty.members[target]);
@@ -88,7 +89,7 @@ namespace CombatForms
                         DoDamage(Combat.Instance.playerParty.members[target]);
                 }
             }
-            else if (this.eType == EType.PLAYER)
+            else if (this.eType == EType.PLAYER && Combat.Instance.activeParty.activePlayer.Alive == true)
             {
                 if (Combat.Instance.enemyParty.members[target].Alive == true)
                     DoDamage(Combat.Instance.enemyParty.members[target]);
