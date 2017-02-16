@@ -25,6 +25,9 @@ namespace CombatForms
             m_Speed = speed;
             m_Block = block;
             eType = e;
+            m_level = 1;
+            m_exp = 0;
+            m_maxExp = 50;
         }
         public string Space = "-------------------------------------------------------------";
         /// <summary>
@@ -126,6 +129,22 @@ namespace CombatForms
             Combat.Instance.activeParty.activePlayer.isBlocking = true;
             Combat.Instance.combatLog += this.Name + " prepared a block! " + Environment.NewLine + Space + Environment.NewLine;
         }
+
+        public void levelUp()
+        {
+            m_level++;
+            m_exp -= (int)m_maxExp;
+            m_maxExp = (int)(Math.Pow((double)50, (double)(m_level + 2) / (double)5) + (double)50);
+        }
+
+        public void addExp(int exp)
+        {
+            m_exp += exp;
+        }
+
+        public int m_exp;
+        public int m_maxExp;
+        public int m_level;
         private float m_Health;
         private string m_Name;
         private bool m_Alive;
@@ -138,5 +157,9 @@ namespace CombatForms
         public float Health { get { return m_Health; } set { m_Health = value; } }
         public string Name { get { return m_Name; } set { m_Name = value; } }
         public float Speed { get { return m_Speed; } }
+
+        public int Exp { get { return m_exp; } }
+        public int MaxExp { get { return m_maxExp; } }
+        public int LevelUp { get { return m_level; } }
     }
 }

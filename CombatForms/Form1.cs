@@ -14,7 +14,9 @@ namespace CombatForms
     public partial class WaterEmblem : Form
     {
         List<RichTextBox> playersText = new List<RichTextBox>();
+        List<TextBox> playersEXP = new List<TextBox>();
         List<RichTextBox> enemiesText = new List<RichTextBox>();
+        List<TextBox> EnemiesEXP = new List<TextBox>();
 
         List<ProgressBar> playerProgess = new List<ProgressBar>();
         List<ProgressBar> enemiesProgess = new List<ProgressBar>();
@@ -32,6 +34,7 @@ namespace CombatForms
                 Combat.Instance.activePlaya.Flee();
                 MessageBox.Show(Combat.Instance.activeParty.activePlayer.Name + " has chose to flee!");
             }
+
             for (int i = 0; i < Combat.Instance.playerParty.members.Count; i++)
             {
                 if (Combat.Instance.playerParty.members[i].Alive == false)
@@ -39,6 +42,7 @@ namespace CombatForms
                 else
                     playersText[i].Text = Combat.Instance.playerParty.members[i].Name + " : " + (int)Combat.Instance.playerParty.members[i].Health;
                 playerProgess[i].Value = (int)Combat.Instance.playerParty.members[i].Health;
+                //playersEXP[i].Text = 
             }
             for (int i = 0; i < Combat.Instance.enemyParty.members.Count; i++)
             {
@@ -48,6 +52,7 @@ namespace CombatForms
                     enemiesText[i].Text = Combat.Instance.enemyParty.members[i].Name + " : " + (int)Combat.Instance.enemyParty.members[i].Health;
                 enemiesProgess[i].Value = (int)Combat.Instance.enemyParty.members[i].Health;
             }
+
             int d = 0;
             int m = 0;
             foreach (Entity e in Combat.Instance.enemyParty.members)
