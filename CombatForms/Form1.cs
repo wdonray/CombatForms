@@ -34,7 +34,10 @@ namespace CombatForms
             for (int i = 0; i < Combat.Instance.playerParty.members.Count; i++)
             {
                 if (Combat.Instance.playerParty.members[i].Alive == false)
+                {
                     playersText[i].Text = "Dead : " + (int)Combat.Instance.playerParty.members[i].Health;
+                    Grave.Text += Combat.Instance.playerParty.members[i].Name + Environment.NewLine;
+                }
                 else
                     playersText[i].Text = Combat.Instance.playerParty.members[i].Name + " : " + (int)Combat.Instance.playerParty.members[i].Health;
                 playerProgess[i].Value = (int)Combat.Instance.playerParty.members[i].Health;
@@ -166,8 +169,9 @@ namespace CombatForms
             button1.Enabled = true;
             button6.Enabled = true;
             button3.Enabled = true;
-            Combat test = new Combat();
-            DataManager<Combat>.Serialize("Test", test);
+            Options.Visible = true;
+            //Combat test = new Combat();
+            //DataManager<Combat>.Serialize("Test", test);
         }
 
         private void Loader_Click(object sender, EventArgs e)
@@ -178,12 +182,18 @@ namespace CombatForms
             button1.Enabled = true;
             button6.Enabled = true;
             button3.Enabled = true;
-            Combat work = DataManager<Combat>.Deserialize("Test");
+            Options.Visible = true;
+            //Combat work = DataManager<Combat>.Deserialize("Test");
         }
 
         private void Exit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void Grave_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

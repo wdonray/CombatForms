@@ -29,7 +29,7 @@ namespace CombatForms
             Entity aeris = new Entity(100, "Aeris the Archer", true, false, 4, Entity.EType.PLAYER);
 
             Entity entitySoldier = new Entity(100, "Dwarf Soldier", true, false, 2, Entity.EType.ENEMY);
-            Entity entityArcher = new Entity(100, "Dwarf Archer", true, false, 3, Entity.EType.ENEMY);
+           Entity entityArcher = new Entity(100, "Dwarf Archer", true, false, 3, Entity.EType.ENEMY);
 
             playerParty.AddPlayer(cloud);
             playerParty.AddPlayer(aeris);
@@ -40,7 +40,7 @@ namespace CombatForms
             Combat.Instance.AddToCombatParty(enemyParty);
 
             Combat.Instance.AddPlayerParty(cloud);
-            Combat.Instance.AddPlayerParty(aeris);
+           Combat.Instance.AddPlayerParty(aeris);
             Combat.Instance.AddEnemyParty(entitySoldier);
             Combat.Instance.AddEnemyParty(entityArcher);
 

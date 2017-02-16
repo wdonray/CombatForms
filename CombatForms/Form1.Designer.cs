@@ -47,6 +47,8 @@
             this.Save = new System.Windows.Forms.Button();
             this.Loader = new System.Windows.Forms.Button();
             this.Exit = new System.Windows.Forms.Button();
+            this.Grave = new System.Windows.Forms.RichTextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -236,12 +238,33 @@
             this.Exit.UseVisualStyleBackColor = true;
             this.Exit.Click += new System.EventHandler(this.Exit_Click);
             // 
-            // Form1
+            // Grave
+            // 
+            this.Grave.Location = new System.Drawing.Point(12, 417);
+            this.Grave.Name = "Grave";
+            this.Grave.Size = new System.Drawing.Size(100, 96);
+            this.Grave.TabIndex = 20;
+            this.Grave.Text = "";
+            this.Grave.TextChanged += new System.EventHandler(this.Grave_TextChanged);
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.Color.Firebrick;
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(12, 391);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 21;
+            this.textBox1.Text = "    GraveYard";
+            // 
+            // WaterEmblem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1264, 682);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.Grave);
             this.Controls.Add(this.Exit);
             this.Controls.Add(this.Loader);
             this.Controls.Add(this.Save);
@@ -261,10 +284,11 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "WaterEmblem";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -288,6 +312,8 @@
         private System.Windows.Forms.Button Save;
         private System.Windows.Forms.Button Loader;
         private System.Windows.Forms.Button Exit;
+        private System.Windows.Forms.RichTextBox Grave;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
