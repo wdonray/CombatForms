@@ -66,7 +66,7 @@ namespace CombatForms
 
             FiniteStateMachine<GameStart>.Instance.Start(GameStart.INIT);
 
-           // Combat.Instance.NextParty();
+            Combat.Instance.NextParty();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
