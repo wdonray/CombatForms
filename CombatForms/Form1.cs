@@ -20,14 +20,32 @@ namespace CombatForms
         List<ProgressBar> enemiesProgess = new List<ProgressBar>();
         public void UpdateHub()
         {
+            if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "ATTACK")
+                Combat.Instance.activePlaya.Attack();
+            else if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "REST")
+                Combat.Instance.activePlaya.EndTurn();
+            else if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "DEFEND")
+                Combat.Instance.activePlaya.Defend();
+            else if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "FLEE")
+            {
+                Combat.Instance.activePlaya.Flee();
+                MessageBox.Show(Combat.Instance.activeParty.activePlayer.Name + " has chose to flee!");
+            }
+
             for (int i = 0; i < Combat.Instance.playerParty.members.Count; i++)
             {
-                playersText[i].Text = Combat.Instance.playerParty.members[i].Name;
+                if (Combat.Instance.playerParty.members[i].Alive == false)
+                    playersText[i].Text = "Dead : " + (int)Combat.Instance.playerParty.members[i].Health;
+                else
+                    playersText[i].Text = Combat.Instance.playerParty.members[i].Name + " : " + (int)Combat.Instance.playerParty.members[i].Health;
                 playerProgess[i].Value = (int)Combat.Instance.playerParty.members[i].Health;
             }
             for (int i = 0; i < Combat.Instance.enemyParty.members.Count; i++)
             {
-                enemiesText[i].Text = Combat.Instance.enemyParty.members[i].Name;
+                if (Combat.Instance.enemyParty.members[i].Alive == false)
+                    enemiesText[i].Text = "Dead : " + (int)Combat.Instance.enemyParty.members[i].Health;
+                else
+                    enemiesText[i].Text = Combat.Instance.enemyParty.members[i].Name + " : " + (int)Combat.Instance.enemyParty.members[i].Health;
                 enemiesProgess[i].Value = (int)Combat.Instance.enemyParty.members[i].Health;
             }
             int d = 0;
@@ -52,6 +70,7 @@ namespace CombatForms
             richTextBox1.ScrollToCaret();
             Active.Text = ("Active Player: " + Combat.Instance.activeParty.activePlayer.Name);
         }
+
         public Form1()
         {
             InitializeComponent();
@@ -67,6 +86,7 @@ namespace CombatForms
             enemiesProgess.Add(progressBar4);
 
             UpdateHub();
+
             button2.Enabled = false;
             button2.Visible = false;
         }
@@ -87,7 +107,6 @@ namespace CombatForms
         private void Attack_Click(object sender, EventArgs e)
         {
             FiniteStateMachine<GameStart>.Instance.ChangeState(GameStart.ATTACK);
-            Combat.Instance.activePlaya.Attack();
             button1.Enabled = false;
             button3.Enabled = false;
             button6.Enabled = false;
@@ -98,7 +117,6 @@ namespace CombatForms
         private void EndTurn_Click(object sender, EventArgs e)
         {
             FiniteStateMachine<GameStart>.Instance.ChangeState(GameStart.REST);
-            Combat.Instance.activePlaya.EndTurn();
             button1.Enabled = true;
             button6.Enabled = true;
             button3.Enabled = true;
@@ -108,7 +126,6 @@ namespace CombatForms
         private void Defend_Click(object sender, EventArgs e)
         {
             FiniteStateMachine<GameStart>.Instance.ChangeState(GameStart.DEFEND);
-            Combat.Instance.activePlaya.Defend();
             button1.Enabled = false;
             button3.Enabled = false;
             button6.Enabled = false;
@@ -119,14 +136,12 @@ namespace CombatForms
         private void Flee_Click(object sender, EventArgs e)
         {
             FiniteStateMachine<GameStart>.Instance.ChangeState(GameStart.FLEE);
-            Combat.Instance.activePlaya.Flee();
             button1.Enabled = false;
             button3.Enabled = false;
             button6.Enabled = false;
             button2.Enabled = true;
-            MessageBox.Show(Combat.Instance.activeParty.activePlayer.Name + " has chose to flee!");
-            EndTurn_Click(sender, e);
             UpdateHub();
+            EndTurn_Click(sender, e);
         }
     }
 }
