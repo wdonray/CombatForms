@@ -36,6 +36,7 @@ namespace CombatForms
         /// <param name="d"></param>
         public void DoDamage(IDamageable d)
         {
+            Random level = new Random();
             Random rand = new Random();
             Random crit = new Random();
             float damage = rand.Next(10, 16);
@@ -49,6 +50,9 @@ namespace CombatForms
                     d.TakeDamage(damage);
                     Combat.Instance.combatLog += this.Name + " is attacking and CRIT "
                          + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
+                    Combat.Instance.activeParty.activePlayer.addExp(rand.Next(25, 71));
+                    if (Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
+                        Combat.Instance.activeParty.activePlayer.levelUp();
                 }
 
                 else
@@ -56,6 +60,9 @@ namespace CombatForms
                     d.TakeDamage(damage);
                     Combat.Instance.combatLog += this.Name + " is attacking "
                         + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
+                    Combat.Instance.activeParty.activePlayer.addExp(rand.Next(20, 51));
+                    if (Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
+                        Combat.Instance.activeParty.activePlayer.levelUp();
                 }
             }
             else if (d.isBlocking == true)
@@ -65,6 +72,9 @@ namespace CombatForms
                 Combat.Instance.combatLog += this.Name + " is attacking "
                    + (d as Entity).Name + "(Blocked half the damage)" + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
                 d.isBlocking = false;
+                Combat.Instance.activeParty.activePlayer.addExp(rand.Next(15, 31));
+                if (Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
+                    Combat.Instance.activeParty.activePlayer.levelUp();
             }
         }
         /// <summary>
@@ -130,13 +140,19 @@ namespace CombatForms
             Combat.Instance.combatLog += this.Name + " prepared a block! " + Environment.NewLine + Space + Environment.NewLine;
         }
 
+        /// <summary>
+        /// Math to level up
+        /// </summary>
         public void levelUp()
         {
             m_level++;
             m_exp -= (int)m_maxExp;
             m_maxExp = (int)(Math.Pow((double)50, (double)(m_level + 2) / (double)5) + (double)50);
         }
-
+        /// <summary>
+        /// Function to add desired exp to my current interger
+        /// </summary>
+        /// <param name="exp"></param>
         public void addExp(int exp)
         {
             m_exp += exp;

@@ -16,7 +16,7 @@ namespace CombatForms
         List<RichTextBox> playersText = new List<RichTextBox>();
         List<TextBox> playersEXP = new List<TextBox>();
         List<RichTextBox> enemiesText = new List<RichTextBox>();
-        List<TextBox> EnemiesEXP = new List<TextBox>();
+        List<TextBox> enemiesEXP = new List<TextBox>();
 
         List<ProgressBar> playerProgess = new List<ProgressBar>();
         List<ProgressBar> enemiesProgess = new List<ProgressBar>();
@@ -42,7 +42,7 @@ namespace CombatForms
                 else
                     playersText[i].Text = Combat.Instance.playerParty.members[i].Name + " : " + (int)Combat.Instance.playerParty.members[i].Health;
                 playerProgess[i].Value = (int)Combat.Instance.playerParty.members[i].Health;
-                //playersEXP[i].Text = 
+                playersEXP[i].Text = "Level "+ Combat.Instance.playerParty.members[i].LevelUp + " : " + Combat.Instance.playerParty.members[i].Exp + " / " + Combat.Instance.playerParty.members[i].MaxExp;
             }
             for (int i = 0; i < Combat.Instance.enemyParty.members.Count; i++)
             {
@@ -51,6 +51,7 @@ namespace CombatForms
                 else
                     enemiesText[i].Text = Combat.Instance.enemyParty.members[i].Name + " : " + (int)Combat.Instance.enemyParty.members[i].Health;
                 enemiesProgess[i].Value = (int)Combat.Instance.enemyParty.members[i].Health;
+                enemiesEXP[i].Text = "Level " + Combat.Instance.enemyParty.members[i].LevelUp + " : " + Combat.Instance.enemyParty.members[i].Exp + " / " + Combat.Instance.enemyParty.members[i].MaxExp;
             }
 
             int d = 0;
@@ -80,12 +81,16 @@ namespace CombatForms
             InitializeComponent();
 
             playersText.Add(richTextBox2);
+            playersEXP.Add(textBox1);
             playersText.Add(richTextBox3);
+            playersEXP.Add(textBox2);
             playerProgess.Add(progressBar1);
             playerProgess.Add(progressBar2);
 
             enemiesText.Add(richTextBox4);
+            enemiesEXP.Add(textBox3);
             enemiesText.Add(richTextBox5);
+            enemiesEXP.Add(textBox4);
             enemiesProgess.Add(progressBar3);
             enemiesProgess.Add(progressBar4);
 
@@ -110,6 +115,10 @@ namespace CombatForms
         private void progressBar3_Click(object sender, EventArgs e) { }
         private void progressBar4_Click(object sender, EventArgs e) { }
         private void richTextBox6_TextChanged(object sender, EventArgs e) { }
+        private void textBox1_TextChanged(object sender, EventArgs e) { }
+        private void textBox2_TextChanged(object sender, EventArgs e) { }
+        private void textBox3_TextChanged(object sender, EventArgs e) { }
+        private void textBox4_TextChanged(object sender, EventArgs e) { }
         #endregion
 
         private void Attack_Click(object sender, EventArgs e)
