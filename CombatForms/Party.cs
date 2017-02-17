@@ -8,17 +8,23 @@ using System.IO;
 
 namespace CombatForms
 {
+    [Serializable]
     public class Party
     {
         public Party() { }
-
+        public Party(List<Entity> entities)
+        {
+            players = entities;
+        }
         int currentID = 0;
 
         public Entity activePlayer;
         private List<Entity> players = new List<Entity>();
 
         public delegate void OnPartyEnd();
+        [XmlIgnore]
         public OnPartyEnd onPartyEnd;
+        [XmlElement(ElementName ="This the party")]
         public List<Entity> members
         {
             get

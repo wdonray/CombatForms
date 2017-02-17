@@ -18,7 +18,7 @@ namespace CombatForms
         List<RichTextBox> enemiesText = new List<RichTextBox>();
         List<TextBox> enemiesEXP = new List<TextBox>();
 
-        List<ProgressBar> playerProgess = new List<ProgressBar>();
+        List<ProgressBar> playersProgess = new List<ProgressBar>();
         List<ProgressBar> enemiesProgess = new List<ProgressBar>();
         public void UpdateHub()
         {
@@ -40,17 +40,19 @@ namespace CombatForms
                 if (Combat.Instance.playerParty.members[i].Alive == false)
                     playersText[i].Text = "Dead : " + (int)Combat.Instance.playerParty.members[i].Health;
                 else
-                    playersText[i].Text = Combat.Instance.playerParty.members[i].Name + " : " + (int)Combat.Instance.playerParty.members[i].Health;
-                playerProgess[i].Value = (int)Combat.Instance.playerParty.members[i].Health;
-                playersEXP[i].Text = "Level "+ Combat.Instance.playerParty.members[i].LevelUp + " : " + Combat.Instance.playerParty.members[i].Exp + " / " + Combat.Instance.playerParty.members[i].MaxExp;
+                    playersText[i].Text = Combat.Instance.playerParty.members[i].Name + " : " + (int)Combat.Instance.playerParty.members[i].Health + "/" + Combat.Instance.playerParty.members[i].MaxHealth;
+                playersProgess[i].Maximum = Combat.Instance.playerParty.members[i].MaxHealth;
+                playersProgess[i].Value = (int)(((float)Combat.Instance.playerParty.members[i].Health / (float)Combat.Instance.playerParty.members[i].MaxHealth) * 100);
+                playersEXP[i].Text = "Level " + Combat.Instance.playerParty.members[i].LevelUp + " : " + Combat.Instance.playerParty.members[i].Exp + " / " + Combat.Instance.playerParty.members[i].MaxExp;
             }
             for (int i = 0; i < Combat.Instance.enemyParty.members.Count; i++)
             {
                 if (Combat.Instance.enemyParty.members[i].Alive == false)
                     enemiesText[i].Text = "Dead : " + (int)Combat.Instance.enemyParty.members[i].Health;
                 else
-                    enemiesText[i].Text = Combat.Instance.enemyParty.members[i].Name + " : " + (int)Combat.Instance.enemyParty.members[i].Health;
-                enemiesProgess[i].Value = (int)Combat.Instance.enemyParty.members[i].Health;
+                    enemiesText[i].Text = Combat.Instance.enemyParty.members[i].Name + " : " + (int)Combat.Instance.enemyParty.members[i].Health + "/" + Combat.Instance.enemyParty.members[i].MaxHealth;
+                enemiesProgess[i].Maximum = Combat.Instance.enemyParty.members[i].MaxHealth;
+                enemiesProgess[i].Value = (int)(((float)Combat.Instance.enemyParty.members[i].Health / (float)Combat.Instance.enemyParty.members[i].MaxHealth) * 100);
                 enemiesEXP[i].Text = "Level " + Combat.Instance.enemyParty.members[i].LevelUp + " : " + Combat.Instance.enemyParty.members[i].Exp + " / " + Combat.Instance.enemyParty.members[i].MaxExp;
             }
 
@@ -84,8 +86,8 @@ namespace CombatForms
             playersEXP.Add(textBox1);
             playersText.Add(richTextBox3);
             playersEXP.Add(textBox2);
-            playerProgess.Add(progressBar1);
-            playerProgess.Add(progressBar2);
+            playersProgess.Add(progressBar1);
+            playersProgess.Add(progressBar2);
 
             enemiesText.Add(richTextBox4);
             enemiesEXP.Add(textBox3);
@@ -101,6 +103,7 @@ namespace CombatForms
             Save.Visible = false;
             Loader.Visible = false;
             Exit.Visible = false;
+            Restart.Visible = false;
             Combat.Instance.combatLog += Combat.Instance.Space;
         }
         #region Text Box and Health Bar
@@ -163,14 +166,26 @@ namespace CombatForms
 
         private void Options_Click(object sender, EventArgs e)
         {
-            Options.Visible = false;
-            Save.Visible = true;
-            Loader.Visible = true;
-            Exit.Visible = true;
-            button1.Enabled = false;
-            button6.Enabled = false;
-            button3.Enabled = false;
-            UpdateHub();
+            if (Save.Visible == false)
+            {
+                Save.Visible = true;
+                Loader.Visible = true;
+                Exit.Visible = true;
+                Restart.Visible = true;
+                button1.Enabled = false;
+                button6.Enabled = false;
+                button3.Enabled = false;
+            }
+            else
+            {
+                Save.Visible = false;
+                Loader.Visible = false;
+                Exit.Visible = false;
+                Restart.Visible = false;
+                button1.Enabled = true;
+                button6.Enabled = true;
+                button3.Enabled = true;
+            }
         }
 
         private void Save_Click(object sender, EventArgs e)
@@ -178,12 +193,16 @@ namespace CombatForms
             Save.Visible = false;
             Loader.Visible = false;
             Exit.Visible = false;
+            Restart.Visible = false;
             button1.Enabled = true;
             button6.Enabled = true;
             button3.Enabled = true;
             Options.Visible = true;
-            //Combat test = new Combat();
-            //DataManager<Combat>.Serialize("Test", test);
+            DataManager<Entity>.Serialize("ACTIVE PLAYER", Combat.Instance.activeParty.activePlayer);
+            DataManager<Party>.Serialize("ACTIVE PARTY", Combat.Instance.activeParty);
+            DataManager<Party>.Serialize("INACTIVE PARTY", Combat.Instance.inactiveParty);
+            DataManager<List<Entity>>.Serialize("PLAYER PARTY MEMBERS", Combat.Instance.playerParty.members);
+            DataManager<List<Entity>>.Serialize("ENEMY PARTY MEMBERS", Combat.Instance.enemyParty.members);
         }
 
         private void Loader_Click(object sender, EventArgs e)
@@ -191,16 +210,29 @@ namespace CombatForms
             Save.Visible = false;
             Loader.Visible = false;
             Exit.Visible = false;
+            Restart.Visible = false;
             button1.Enabled = true;
             button6.Enabled = true;
             button3.Enabled = true;
             Options.Visible = true;
-            //Combat work = DataManager<Combat>.Deserialize("Test");
+            Combat.Instance.activeParty.activePlayer = DataManager<Entity>.Deserialize("ACTIVE PLAYER");
+            Combat.Instance.activeParty = DataManager<Party>.Deserialize("ACTIVE PARTY");
+            Combat.Instance.inactiveParty = DataManager<Party>.Deserialize("INACTIVE PARTY");
+            Combat.Instance.playerParty.members = DataManager<List<Entity>>.Deserialize("PLAYER PARTY MEMBERS");
+            Combat.Instance.enemyParty.members = DataManager<List<Entity>>.Deserialize("ENEMY PARTY MEMBERS");
+
+
+            UpdateHub();
         }
 
         private void Exit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void Restart_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
         }
     }
 }

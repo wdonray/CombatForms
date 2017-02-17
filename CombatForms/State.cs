@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CombatForms
 {
+    [Serializable]
     class State
     {
         public delegate void Handler();

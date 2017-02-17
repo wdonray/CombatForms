@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace CombatForms
 {
-
+    [Serializable]
     class FiniteStateMachine<T>
     {
         private State currentState;

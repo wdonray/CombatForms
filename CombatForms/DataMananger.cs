@@ -8,27 +8,31 @@ using System.IO;
 
 namespace CombatForms
 {
-    static class DataManager<T>
+    static class DataManager<T> where T : new()
     {
-        public static void Serialize(string filename, T data)
+        public static void Serialize(string fileName, T data)
         {
-            XmlSerializer serilaizer = new XmlSerializer(typeof(T));
-            if (!File.Exists(@"..\..\" + filename + ".xml"))
-            {
-                FileStream work = File.Create(@"..\..\" + filename + ".xml");
-                work.Close();
-            }
-            TextWriter writter = new StreamWriter(@"..\..\" + filename + ".xml");
-            serilaizer.Serialize(writter, data);
-            writter.Close();
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+
+            TextWriter writer = new StreamWriter(Environment.CurrentDirectory + "../Saves/" + fileName + ".xml");
+
+            serializer.Serialize(writer, data);
+
+            writer.Close();
         }
+
         public static T Deserialize(string fileName)
         {
             T data;
-            XmlSerializer serilaizer = new XmlSerializer(typeof(T));
-            TextReader reader = new StreamReader(@"..\..\" + fileName + ".xml");
-            data = (T)serilaizer.Deserialize(reader);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+
+            TextReader reader = new StreamReader(Environment.CurrentDirectory + "../Saves/" + fileName + ".xml");
+
+            data = (T)serializer.Deserialize(reader);
+
             reader.Close();
+
             return data;
         }
     }

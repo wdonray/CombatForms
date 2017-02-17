@@ -8,6 +8,8 @@ using System.IO;
 
 namespace CombatForms
 {
+    [Serializable]
+    [XmlInclude(typeof(Entity))]
     public class Entity : IDamageable, IDamager
     {
         public enum EType
@@ -25,9 +27,10 @@ namespace CombatForms
             m_Speed = speed;
             m_Block = block;
             eType = e;
-            m_level = 1;
-            m_exp = 0;
-            m_maxExp = 50;
+            m_Level = 1;
+            m_Exp = 0;
+            m_MaxExp = 50;
+            m_MaxHealth = 100;
         }
         public string Space = "-------------------------------------------------------------";
         /// <summary>
@@ -50,7 +53,7 @@ namespace CombatForms
                     d.TakeDamage(damage);
                     Combat.Instance.combatLog += this.Name + " is attacking and CRIT "
                          + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
-                    Combat.Instance.activeParty.activePlayer.addExp(rand.Next(25, 71));
+                    Combat.Instance.activeParty.activePlayer.AddExp(level.Next(25, 71));
                     if (Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
                         Combat.Instance.activeParty.activePlayer.levelUp();
                 }
@@ -60,7 +63,7 @@ namespace CombatForms
                     d.TakeDamage(damage);
                     Combat.Instance.combatLog += this.Name + " is attacking "
                         + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
-                    Combat.Instance.activeParty.activePlayer.addExp(rand.Next(20, 51));
+                    Combat.Instance.activeParty.activePlayer.AddExp(level.Next(20, 51));
                     if (Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
                         Combat.Instance.activeParty.activePlayer.levelUp();
                 }
@@ -72,7 +75,7 @@ namespace CombatForms
                 Combat.Instance.combatLog += this.Name + " is attacking "
                    + (d as Entity).Name + "(Blocked half the damage)" + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
                 d.isBlocking = false;
-                Combat.Instance.activeParty.activePlayer.addExp(rand.Next(15, 31));
+                Combat.Instance.activeParty.activePlayer.AddExp(level.Next(15, 31));
                 if (Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
                     Combat.Instance.activeParty.activePlayer.levelUp();
             }
@@ -145,37 +148,42 @@ namespace CombatForms
         /// </summary>
         public void levelUp()
         {
-            m_level++;
-            m_exp -= (int)m_maxExp;
-            m_maxExp = (int)(Math.Pow((double)50, (double)(m_level + 2) / (double)5) + (double)50);
+            m_Level++;
+            m_Speed++;
+            m_Exp -= (int)m_MaxExp;
+            m_MaxExp = (int)(Math.Pow((double)50, (double)(m_Level + 2) / (double)5) + (double)50);
+            m_MaxHealth = (int)(Math.Pow((double)100, (double)(m_Level + 1) / (double)5) + (double)100);
+            m_Health += 10;
         }
         /// <summary>
         /// Function to add desired exp to my current interger
         /// </summary>
-        /// <param name="exp"></param>
-        public void addExp(int exp)
+        /// <param name="Exp"></param>
+        public void AddExp(int Exp)
         {
-            m_exp += exp;
+            m_Exp += Exp;
         }
 
-        public int m_exp;
-        public int m_maxExp;
-        public int m_level;
+        public int m_Exp;
+        public int m_MaxExp;
+        public int m_Level;
         private float m_Health;
+        public int m_MaxHealth;
         private string m_Name;
         private bool m_Alive;
         private float m_Speed;
         private bool m_Block;
         public delegate void Handler();
+        [XmlIgnore]
         public Handler onEndTurn;
         public bool Alive { get { return m_Alive; } set { m_Alive = value; } }
         public bool isBlocking { get { return m_Block; } set { m_Block = value; } }
         public float Health { get { return m_Health; } set { m_Health = value; } }
         public string Name { get { return m_Name; } set { m_Name = value; } }
         public float Speed { get { return m_Speed; } }
-
-        public int Exp { get { return m_exp; } }
-        public int MaxExp { get { return m_maxExp; } }
-        public int LevelUp { get { return m_level; } }
+        public int Exp { get { return m_Exp; } }
+        public int MaxExp { get { return m_MaxExp; } }
+        public int LevelUp { get { return m_Level; } }
+        public int MaxHealth { get { return m_MaxHealth; } }
     }
 }
