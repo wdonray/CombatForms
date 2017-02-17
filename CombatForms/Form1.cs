@@ -220,8 +220,6 @@ namespace CombatForms
             Combat.Instance.inactiveParty = DataManager<Party>.Deserialize("INACTIVE PARTY");
             Combat.Instance.playerParty.members = DataManager<List<Entity>>.Deserialize("PLAYER PARTY MEMBERS");
             Combat.Instance.enemyParty.members = DataManager<List<Entity>>.Deserialize("ENEMY PARTY MEMBERS");
-
-
             UpdateHub();
         }
 

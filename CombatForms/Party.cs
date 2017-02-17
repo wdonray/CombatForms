@@ -31,6 +31,10 @@ namespace CombatForms
             {
                 return players;
             }
+            set
+            {
+                players = value;
+            }
         }
         /// <summary>
         /// Function to set the next player in the list to be the active player
