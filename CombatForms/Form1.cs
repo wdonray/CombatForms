@@ -220,6 +220,20 @@ namespace CombatForms
             Combat.Instance.inactiveParty = DataManager<Party>.Deserialize("INACTIVE PARTY");
             Combat.Instance.playerParty.members = DataManager<List<Entity>>.Deserialize("PLAYER PARTY MEMBERS");
             Combat.Instance.enemyParty.members = DataManager<List<Entity>>.Deserialize("ENEMY PARTY MEMBERS");
+            List<Entity> tmp;
+            List<Entity> tmp2;
+            tmp = Combat.Instance.playerParty.members;
+            tmp2 = Combat.Instance.enemyParty.members;
+            foreach (Entity p in tmp.ToList())
+            {
+                Combat.Instance.AddPlayerParty(p);
+                p.onEndTurn.Invoke();
+            }
+            foreach (Entity p in tmp2.ToList())
+            {
+                Combat.Instance.AddEnemyParty(p);
+                p.onEndTurn.Invoke();
+            }
             UpdateHub();
         }
 
