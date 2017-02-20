@@ -99,6 +99,8 @@ namespace CombatForms
         /// </summary>
         public void EndTurn()
         {
+            if (onEndTurn == null)
+                throw new NullReferenceException("Donray no.... please give me a function to execute");
             if (onEndTurn != null)
                 onEndTurn.Invoke();
         }

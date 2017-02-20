@@ -215,13 +215,25 @@ namespace CombatForms
             button6.Enabled = true;
             button3.Enabled = true;
             Options.Visible = true;
-            Combat.Instance.activeParty.activePlayer = DataManager<Entity>.Deserialize("ACTIVE PLAYER");
+            
             Combat.Instance.activeParty = DataManager<Party>.Deserialize("ACTIVE PARTY");
             Combat.Instance.inactiveParty = DataManager<Party>.Deserialize("INACTIVE PARTY");
             Combat.Instance.playerParty.members = DataManager<List<Entity>>.Deserialize("PLAYER PARTY MEMBERS");
             Combat.Instance.enemyParty.members = DataManager<List<Entity>>.Deserialize("ENEMY PARTY MEMBERS");
+            foreach (var member in Combat.Instance.activeParty.members)
+                member.onEndTurn += Combat.Instance.activeParty.GetNext;
+            foreach (var member in Combat.Instance.playerParty.members)
+                member.onEndTurn += Combat.Instance.playerParty.GetNext;
+            foreach (var member in Combat.Instance.enemyParty.members)
+                member.onEndTurn += Combat.Instance.enemyParty.GetNext;
+            Combat.Instance.activeParty.activePlayer = DataManager<Entity>.Deserialize("ACTIVE PLAYER");
+            Combat.Instance.activeParty.activePlayer.onEndTurn += Combat.Instance.activeParty.GetNext;
+
+
             UpdateHub();
         }
+
+        
 
         private void Exit_Click(object sender, EventArgs e)
         {
