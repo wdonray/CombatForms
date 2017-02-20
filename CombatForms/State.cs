@@ -20,8 +20,7 @@ namespace CombatForms
         {
             onEnter = null;
             onExit = null;
-            m_name = e.ToString();
-            
+            m_name = e.ToString();  
         }
         private string m_name;
         public string Name
