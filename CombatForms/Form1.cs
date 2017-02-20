@@ -148,6 +148,7 @@ namespace CombatForms
             button6.Enabled = false;
             button2.Enabled = true;
             UpdateHud();
+            MessageBox.Show(Combat.Instance.activeParty.activePlayer.Name + " has chosen to leave the battle!");
             EndTurn_Click(sender, e);
         }
 
@@ -202,33 +203,14 @@ namespace CombatForms
             button6.Enabled = true;
             button3.Enabled = true;
             Options.Visible = true;
-            
+
             Combat.Instance.activeParty = DataManager<Party>.Deserialize("ACTIVE PARTY");
             Combat.Instance.inactiveParty = DataManager<Party>.Deserialize("INACTIVE PARTY");
             Combat.Instance.playerParty.members = DataManager<List<Entity>>.Deserialize("PLAYER PARTY MEMBERS");
             Combat.Instance.enemyParty.members = DataManager<List<Entity>>.Deserialize("ENEMY PARTY MEMBERS");
-<<<<<<< HEAD
-            List<Entity> tmp;
-            List<Entity> tmp2;
-            tmp = Combat.Instance.playerParty.members;
-            tmp2 = Combat.Instance.enemyParty.members;
-            foreach (Entity p in tmp.ToList())
-            {
-                Combat.Instance.AddPlayerParty(p);
-                p.onEndTurn.Invoke();
-            }
-            foreach (Entity p in tmp2.ToList())
-            {
-                Combat.Instance.AddEnemyParty(p);
-                p.onEndTurn.Invoke();
-            }
-            UpdateHub();
-        }
-=======
             Combat.Instance.activeParty.activePlayer = DataManager<Entity>.Deserialize("ACTIVE PLAYER");
             Combat.Instance.activeParty.activePlayer.fsm.RebuildFSM();
             Combat.Instance.activePlaya.fsm.Start(Combat.Instance.activePlaya.CurrentState);
->>>>>>> 87a4c79802b580ccf592e947ebeb33487baeac16
 
             Combat.Instance.activeParty.activePlayer.onEndTurn += Combat.Instance.activeParty.GetNext;
             foreach (var member in Combat.Instance.activeParty.members)
@@ -237,17 +219,14 @@ namespace CombatForms
                 member.fsm.Start(member.CurrentState);
                 member.onEndTurn += Combat.Instance.activeParty.GetNext;
             }
-                
             foreach (var member in Combat.Instance.playerParty.members)
             {
                 member.fsm.RebuildFSM();
                 member.fsm.Start(member.CurrentState);
                 member.onEndTurn += Combat.Instance.playerParty.GetNext;
             }
-                
             foreach (var member in Combat.Instance.enemyParty.members)
             {
-                
                 member.fsm.RebuildFSM();
                 member.fsm.Start(member.CurrentState);
                 member.onEndTurn += Combat.Instance.enemyParty.GetNext;

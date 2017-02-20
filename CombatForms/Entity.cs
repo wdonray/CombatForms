@@ -17,13 +17,12 @@ namespace CombatForms
         public State CurrentState { get; set; }
         [XmlElement(ElementName = "PlayerFSM")]
         public FiniteStateMachine<PlayerStates> fsm;
-       
+
         public enum EType
         {
             PLAYER,
             ENEMY,
         }
-
         public EType eType;
         public Entity() { }
         public Entity(float health, string name, bool alive, bool block, float speed, EType e, FiniteStateMachine<PlayerStates> f)
@@ -42,8 +41,6 @@ namespace CombatForms
             m_MaxExp = 50;
             m_MaxHealth = 100;
         }
-     
-        
         public string Space = "-------------------------------------------------------------";
         /// <summary>
         /// Does damage based on if the selected target is blocking or not and adds log to combatLog
@@ -55,18 +52,18 @@ namespace CombatForms
             Random rand = new Random();
             Random crit = new Random();
             float damage = rand.Next(10, 16);
-            if(d.isBlocking == false)
+            if (d.isBlocking == false)
             {
                 float critChance = crit.Next(1, 101);
                 //Added a crit chance of 15%
-                if(critChance <= 15)
+                if (critChance <= 15)
                 {
                     damage = damage * 2;
                     d.TakeDamage(damage);
                     Combat.Instance.combatLog += this.Name + " is attacking and CRIT "
                          + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
                     Combat.Instance.activeParty.activePlayer.AddExp(level.Next(25, 71));
-                    if(Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
+                    if (Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
                         Combat.Instance.activeParty.activePlayer.levelUp();
                 }
 
@@ -76,11 +73,11 @@ namespace CombatForms
                     Combat.Instance.combatLog += this.Name + " is attacking "
                         + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
                     Combat.Instance.activeParty.activePlayer.AddExp(level.Next(20, 51));
-                    if(Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
+                    if (Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
                         Combat.Instance.activeParty.activePlayer.levelUp();
                 }
             }
-            else if(d.isBlocking == true)
+            else if (d.isBlocking == true)
             {
                 damage = damage / 2;
                 d.TakeDamage(damage);
@@ -88,7 +85,7 @@ namespace CombatForms
                    + (d as Entity).Name + "(Blocked half the damage)" + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
                 d.isBlocking = false;
                 Combat.Instance.activeParty.activePlayer.AddExp(level.Next(15, 31));
-                if(Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
+                if (Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
                     Combat.Instance.activeParty.activePlayer.levelUp();
             }
         }
@@ -99,7 +96,7 @@ namespace CombatForms
         public void TakeDamage(float f)
         {
             m_Health -= f;
-            if(m_Health <= 0)
+            if (m_Health <= 0)
             {
                 m_Alive = false;
                 m_Health = 0;
@@ -111,12 +108,12 @@ namespace CombatForms
         /// </summary>
         public void EndTurn()
         {
-            if(fsm.ChangeState(PlayerStates.REST) == false)
+            if (fsm.ChangeState(PlayerStates.REST) == false)
                 return;
             CurrentState = fsm.GetState();
-            if(onEndTurn == null)
+            if (onEndTurn == null)
                 throw new NullReferenceException("Please give me a function to execute");
-            if(onEndTurn != null)
+            if (onEndTurn != null)
                 onEndTurn.Invoke();
         }
         /// <summary>
@@ -124,26 +121,26 @@ namespace CombatForms
         /// </summary>
         public void Attack()
         {
-            if(fsm.ChangeState(PlayerStates.ATTACK) == false)
+            if (fsm.ChangeState(PlayerStates.ATTACK) == false)
                 return;
             CurrentState = fsm.GetState();
             Random random = new Random();
             int targetP = random.Next(0, (Combat.Instance.playerParty.members.Count));
             int targetE = random.Next(0, (Combat.Instance.enemyParty.members.Count));
-            if(this.eType == EType.ENEMY && Combat.Instance.activeParty.activePlayer.Alive == true)
+            if (this.eType == EType.ENEMY && Combat.Instance.activeParty.activePlayer.Alive == true)
             {
                 do
                 {
                     targetP = random.Next(0, (Combat.Instance.playerParty.members.Count));
-                } while(Combat.Instance.playerParty.members[targetP].Alive == false);
+                } while (Combat.Instance.playerParty.members[targetP].Alive == false);
                 DoDamage(Combat.Instance.playerParty.members[targetP]);
             }
-            else if(this.eType == EType.PLAYER && Combat.Instance.activeParty.activePlayer.Alive == true)
+            else if (this.eType == EType.PLAYER && Combat.Instance.activeParty.activePlayer.Alive == true)
             {
                 do
                 {
                     targetE = random.Next(0, (Combat.Instance.enemyParty.members.Count));
-                } while(Combat.Instance.enemyParty.members[targetE].Alive == false);
+                } while (Combat.Instance.enemyParty.members[targetE].Alive == false);
                 DoDamage(Combat.Instance.enemyParty.members[targetE]);
             }
         }
@@ -154,14 +151,20 @@ namespace CombatForms
         {
             if (fsm.ChangeState(PlayerStates.FLEE) == false)
                 return;
-            Combat.Instance.activeParty.activePlayer.TakeDamage(Combat.Instance.activeParty.activePlayer.Health);
+            CurrentState = fsm.GetState();
+            Combat.Instance.activeParty.activePlayer.Alive = false;
+            if (Combat.Instance.activeParty.activePlayer.Alive == false)
+            {
+                Combat.Instance.activeParty.activePlayer.Health = 0;
+                Combat.Instance.combatLog += this.Name + " has died" + Environment.NewLine + Space + Environment.NewLine;
+            }
         }
         /// <summary>
         /// Sets the current player boolean (isBlocking) to true and adds text to the combatLog String
         /// </summary>
         public void Defend()
         {
-            if(fsm.ChangeState(PlayerStates.DEFEND) == false)
+            if (fsm.ChangeState(PlayerStates.DEFEND) == false)
                 return;
             CurrentState = fsm.GetState();
             Combat.Instance.activeParty.activePlayer.isBlocking = true;
