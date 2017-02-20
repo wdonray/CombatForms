@@ -22,8 +22,6 @@ namespace CombatForms
         List<ProgressBar> enemiesProgess = new List<ProgressBar>();
         public void UpdateHud()
         {
-       
-  
             for (int i = 0; i < Combat.Instance.playerParty.members.Count; i++)
             {
                 if (Combat.Instance.playerParty.members[i].Alive == false)
@@ -213,24 +211,19 @@ namespace CombatForms
             Combat.Instance.activeParty.activePlayer.fsm.RebuildFSM();
             Combat.Instance.activePlaya.fsm.Start(Combat.Instance.activePlaya.CurrentState);
 
-
             Combat.Instance.activeParty.activePlayer.onEndTurn += Combat.Instance.activeParty.GetNext;
             foreach (var member in Combat.Instance.activeParty.members)
             {
-                
                 member.fsm.RebuildFSM();
                 member.fsm.Start(member.CurrentState);
                 member.onEndTurn += Combat.Instance.activeParty.GetNext;
-
             }
                 
             foreach (var member in Combat.Instance.playerParty.members)
             {
-                
                 member.fsm.RebuildFSM();
                 member.fsm.Start(member.CurrentState);
                 member.onEndTurn += Combat.Instance.playerParty.GetNext;
-
             }
                 
             foreach (var member in Combat.Instance.enemyParty.members)
@@ -240,20 +233,12 @@ namespace CombatForms
                 member.fsm.Start(member.CurrentState);
                 member.onEndTurn += Combat.Instance.enemyParty.GetNext;
             }
-                
-           
-
-
             UpdateHud();
         }
-
-        
-
         private void Exit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void Restart_Click(object sender, EventArgs e)
         {
             Application.Restart();

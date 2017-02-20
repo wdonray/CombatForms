@@ -124,7 +124,6 @@ namespace CombatForms
             {
                 activeParty.GetNext();
             }
-
         }
     }
 }

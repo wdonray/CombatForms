@@ -76,8 +76,6 @@ namespace CombatForms
         public void Sort()
         {
             players.Sort((x, y) => -1 * x.Speed.CompareTo(y.Speed));
-            //players.Reverse();
-            //activePlayer = players[currentID];
         }
     }
 }

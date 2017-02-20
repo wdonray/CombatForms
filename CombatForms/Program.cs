@@ -6,14 +6,6 @@ using System.Windows.Forms;
 
 namespace CombatForms
 {
-    public enum GameStart
-    {
-        INIT = 0,
-        ATTACK = 1,
-        REST = 2,
-        DEFEND = 3,
-        FLEE = 4,
-    }
     public enum PlayerStates
     {
         INIT = 0,
@@ -31,10 +23,6 @@ namespace CombatForms
         [STAThread]
         static void Main()
         {
-            
-            
-
-
             FiniteStateMachine<PlayerStates> entity_fsm = new FiniteStateMachine<PlayerStates>();
             entity_fsm.AddState(PlayerStates.INIT);
             entity_fsm.AddState(PlayerStates.ATTACK);
@@ -76,7 +64,6 @@ namespace CombatForms
             Combat.Instance.AddEnemyParty(entitySoldier);
             Combat.Instance.AddEnemyParty(entityArcher);
 
-     
             Combat.Instance.CombatPartyMembers.Sort((a, b) => -1 * a.Speed.CompareTo(b.Speed));
 
             Combat.Instance.NextParty();

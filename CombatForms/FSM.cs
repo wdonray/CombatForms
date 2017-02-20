@@ -26,8 +26,6 @@ namespace CombatForms
             transitionNames = new List<string>();
             stateList = new List<State>();
         }
-   
-        
         /// <summary>
         /// Creates a state and adds a key and value to it
         /// </summary>
@@ -38,7 +36,6 @@ namespace CombatForms
             stateList.Add(s);
             states.Add(s.Name, s);
         }
-
         /// <summary>
         /// Creates a state and adds a key and value to it
         /// </summary>
@@ -48,6 +45,9 @@ namespace CombatForms
             stateList.Add(s);
             states.Add(s.Name, s);
         }
+        /// <summary>
+        /// Splits each state in the transtition so we are able to keep track of each state so we can rebuild it 
+        /// </summary>
         public void RebuildFSM()
         {
             states = new Dictionary<string, State>();
@@ -75,10 +75,8 @@ namespace CombatForms
             string tname = tmp[0].Name + "-" + tmp[1].Name;            
             transitionNames.Add(tname);
             transitions.Add(tname, tmp);
-
             return true;
         }
-
         /// <summary>
         /// when we build the transition names we need to split the first half and second half
         /// in the program
@@ -95,7 +93,6 @@ namespace CombatForms
             tmp.Add(to);
             string tname = tmp[0].Name + "-" + tmp[1].Name;          
             transitions.Add(tname, tmp);
-
             return true;
         }
         /// <summary>
@@ -110,11 +107,14 @@ namespace CombatForms
             else
                 currentState = states.ElementAt(0).Value;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
         public void Start(State s)
         {            
             if(states.ContainsKey(s.Name))
                 currentState = states[s.Name];
-            
         }
         /// <summary>
         /// Sets the current state to the next state and invokes the exit and enter
@@ -138,7 +138,6 @@ namespace CombatForms
                 currentState.onEnter.Invoke();
             Debug.WriteLine("Valid Transition " + key);
             return true;
-            
         }
         /// <summary>
         /// Returns a state with the name passed to it

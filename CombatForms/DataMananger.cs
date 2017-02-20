@@ -15,9 +15,7 @@ namespace CombatForms
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             Directory.CreateDirectory(Environment.CurrentDirectory + "../Saves/");
             TextWriter writer = new StreamWriter(Environment.CurrentDirectory + "../Saves/" + fileName + ".xml");
-
             serializer.Serialize(writer, data);
-
             writer.Close();
         }
 

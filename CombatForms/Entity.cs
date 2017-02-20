@@ -115,7 +115,7 @@ namespace CombatForms
                 return;
             CurrentState = fsm.GetState();
             if(onEndTurn == null)
-                throw new NullReferenceException("Donray no.... please give me a function to execute");
+                throw new NullReferenceException("Please give me a function to execute");
             if(onEndTurn != null)
                 onEndTurn.Invoke();
         }
@@ -152,6 +152,8 @@ namespace CombatForms
         /// </summary>
         public void Flee()
         {
+            if (fsm.ChangeState(PlayerStates.FLEE) == false)
+                return;
             Combat.Instance.activeParty.activePlayer.TakeDamage(Combat.Instance.activeParty.activePlayer.Health);
         }
         /// <summary>
@@ -165,7 +167,6 @@ namespace CombatForms
             Combat.Instance.activeParty.activePlayer.isBlocking = true;
             Combat.Instance.combatLog += this.Name + " prepared a block! " + Environment.NewLine + Space + Environment.NewLine;
         }
-
         /// <summary>
         /// Math to level up
         /// </summary>
@@ -186,7 +187,6 @@ namespace CombatForms
         {
             m_Exp += Exp;
         }
-
         public int m_Exp;
         public int m_MaxExp;
         public int m_Level;
@@ -208,6 +208,5 @@ namespace CombatForms
         public int MaxExp { get { return m_MaxExp; } }
         public int LevelUp { get { return m_Level; } }
         public int MaxHealth { get { return m_MaxHealth; } }
- 
     }
 }
