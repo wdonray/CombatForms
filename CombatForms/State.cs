@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Xml.Serialization;
 namespace CombatForms
 {
     [Serializable]
-    class State
+    [XmlInclude(typeof(State))]     
+    public class State
     {
+        public State() { }
         public delegate void Handler();
+        [XmlIgnore]
         public Handler onEnter;
+        [XmlIgnore]
         public Handler onExit;
-
         public State(Enum e)
         {
             onEnter = null;
             onExit = null;
-            m_name = e.ToString();
+            m_name = e.ToString();  
         }
         private string m_name;
         public string Name

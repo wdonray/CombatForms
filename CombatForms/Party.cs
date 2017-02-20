@@ -24,7 +24,7 @@ namespace CombatForms
         public delegate void OnPartyEnd();
         [XmlIgnore]
         public OnPartyEnd onPartyEnd;
-        [XmlElement(ElementName ="This the party")]
+        [XmlElement(ElementName = "This the party")]
         public List<Entity> members
         {
             get
@@ -76,8 +76,6 @@ namespace CombatForms
         public void Sort()
         {
             players.Sort((x, y) => -1 * x.Speed.CompareTo(y.Speed));
-            //players.Reverse();
-            activePlayer = players[currentID];
         }
     }
 }

@@ -20,21 +20,8 @@ namespace CombatForms
 
         List<ProgressBar> playersProgess = new List<ProgressBar>();
         List<ProgressBar> enemiesProgess = new List<ProgressBar>();
-        public void UpdateHub()
+        public void UpdateHud()
         {
-
-            if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "ATTACK")
-                Combat.Instance.activePlaya.Attack();
-            else if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "REST")
-                Combat.Instance.activePlaya.EndTurn();
-            else if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "DEFEND")
-                Combat.Instance.activePlaya.Defend();
-            else if (FiniteStateMachine<GameStart>.Instance.GetState().ToString() == "FLEE")
-            {
-                Combat.Instance.activePlaya.Flee();
-                MessageBox.Show(Combat.Instance.activeParty.activePlayer.Name + " has chose to flee!");
-            }
-
             for (int i = 0; i < Combat.Instance.playerParty.members.Count; i++)
             {
                 if (Combat.Instance.playerParty.members[i].Alive == false)
@@ -96,7 +83,7 @@ namespace CombatForms
             enemiesProgess.Add(progressBar3);
             enemiesProgess.Add(progressBar4);
 
-            UpdateHub();
+            UpdateHud();
 
             button2.Enabled = false;
             button2.Visible = false;
@@ -126,41 +113,41 @@ namespace CombatForms
 
         private void Attack_Click(object sender, EventArgs e)
         {
-            FiniteStateMachine<GameStart>.Instance.ChangeState(GameStart.ATTACK);
+            Combat.Instance.activeParty.activePlayer.Attack();
             button1.Enabled = false;
             button3.Enabled = false;
             button6.Enabled = false;
             button2.Enabled = true;
-            UpdateHub();
+            UpdateHud();
             EndTurn_Click(sender, e);
         }
         private void EndTurn_Click(object sender, EventArgs e)
         {
-            FiniteStateMachine<GameStart>.Instance.ChangeState(GameStart.REST);
+            Combat.Instance.activeParty.activePlayer.EndTurn();
             button1.Enabled = true;
             button6.Enabled = true;
             button3.Enabled = true;
             button2.Enabled = false;
-            UpdateHub();
+            UpdateHud();
         }
         private void Defend_Click(object sender, EventArgs e)
         {
-            FiniteStateMachine<GameStart>.Instance.ChangeState(GameStart.DEFEND);
+            Combat.Instance.activeParty.activePlayer.Defend();
             button1.Enabled = false;
             button3.Enabled = false;
             button6.Enabled = false;
             button2.Enabled = true;
-            UpdateHub();
+            UpdateHud();
             EndTurn_Click(sender, e);
         }
         private void Flee_Click(object sender, EventArgs e)
         {
-            FiniteStateMachine<GameStart>.Instance.ChangeState(GameStart.FLEE);
+            Combat.Instance.activeParty.activePlayer.Flee();
             button1.Enabled = false;
             button3.Enabled = false;
             button6.Enabled = false;
             button2.Enabled = true;
-            UpdateHub();
+            UpdateHud();
             EndTurn_Click(sender, e);
         }
 
@@ -215,11 +202,12 @@ namespace CombatForms
             button6.Enabled = true;
             button3.Enabled = true;
             Options.Visible = true;
-            Combat.Instance.activeParty.activePlayer = DataManager<Entity>.Deserialize("ACTIVE PLAYER");
+            
             Combat.Instance.activeParty = DataManager<Party>.Deserialize("ACTIVE PARTY");
             Combat.Instance.inactiveParty = DataManager<Party>.Deserialize("INACTIVE PARTY");
             Combat.Instance.playerParty.members = DataManager<List<Entity>>.Deserialize("PLAYER PARTY MEMBERS");
             Combat.Instance.enemyParty.members = DataManager<List<Entity>>.Deserialize("ENEMY PARTY MEMBERS");
+<<<<<<< HEAD
             List<Entity> tmp;
             List<Entity> tmp2;
             tmp = Combat.Instance.playerParty.members;
@@ -236,12 +224,40 @@ namespace CombatForms
             }
             UpdateHub();
         }
+=======
+            Combat.Instance.activeParty.activePlayer = DataManager<Entity>.Deserialize("ACTIVE PLAYER");
+            Combat.Instance.activeParty.activePlayer.fsm.RebuildFSM();
+            Combat.Instance.activePlaya.fsm.Start(Combat.Instance.activePlaya.CurrentState);
+>>>>>>> 87a4c79802b580ccf592e947ebeb33487baeac16
 
+            Combat.Instance.activeParty.activePlayer.onEndTurn += Combat.Instance.activeParty.GetNext;
+            foreach (var member in Combat.Instance.activeParty.members)
+            {
+                member.fsm.RebuildFSM();
+                member.fsm.Start(member.CurrentState);
+                member.onEndTurn += Combat.Instance.activeParty.GetNext;
+            }
+                
+            foreach (var member in Combat.Instance.playerParty.members)
+            {
+                member.fsm.RebuildFSM();
+                member.fsm.Start(member.CurrentState);
+                member.onEndTurn += Combat.Instance.playerParty.GetNext;
+            }
+                
+            foreach (var member in Combat.Instance.enemyParty.members)
+            {
+                
+                member.fsm.RebuildFSM();
+                member.fsm.Start(member.CurrentState);
+                member.onEndTurn += Combat.Instance.enemyParty.GetNext;
+            }
+            UpdateHud();
+        }
         private void Exit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void Restart_Click(object sender, EventArgs e)
         {
             Application.Restart();
