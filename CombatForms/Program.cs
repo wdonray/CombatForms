@@ -59,12 +59,12 @@ namespace CombatForms
             Combat.Instance.AddToCombatParty(playerParty);
             Combat.Instance.AddToCombatParty(enemyParty);
 
-            Combat.Instance.AddPlayerParty(cloud);
-            Combat.Instance.AddPlayerParty(aeris);
-            Combat.Instance.AddEnemyParty(entitySoldier);
-            Combat.Instance.AddEnemyParty(entityArcher);
+            Combat.Instance.AddToPlayerParty(cloud);
+            Combat.Instance.AddToPlayerParty(aeris);
+            Combat.Instance.AddToEnemyParty(entitySoldier);
+            Combat.Instance.AddToEnemyParty(entityArcher);
 
-            Combat.Instance.CombatPartyMembers.Sort((a, b) => -1 * a.Speed.CompareTo(b.Speed));
+            Combat.Instance.CV.CombatPartyMembers.Sort((a, b) => -1 * a.Speed.CompareTo(b.Speed));
 
             Combat.Instance.NextParty();
 

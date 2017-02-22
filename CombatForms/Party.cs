@@ -8,7 +8,7 @@ using System.IO;
 
 namespace CombatForms
 {
-    [Serializable]
+    [Serializable]  
     public class Party
     {
         public Party() { }
@@ -16,15 +16,16 @@ namespace CombatForms
         {
             players = entities;
         }
-        int currentID = 0;
-
-        public Entity activePlayer;
+        public int currentID = 0;
+        [XmlElement(ElementName = "ActivePlayer")]
+        public Entity ActivePlayer;
+        
         private List<Entity> players = new List<Entity>();
 
         public delegate void OnPartyEnd();
         [XmlIgnore]
         public OnPartyEnd onPartyEnd;
-        [XmlElement(ElementName = "This the party")]
+        [XmlElement(ElementName = "Members")]
         public List<Entity> members
         {
             get
@@ -39,18 +40,18 @@ namespace CombatForms
         /// <summary>
         /// Function to set the next player in the list to be the active player
         /// </summary>
-        public void GetNext()
+        public void SetNextPlayer()
         {
             if (currentID >= players.Count - 1)
             {
                 currentID = 0;
-                activePlayer = players[currentID];
+                ActivePlayer = players[currentID];
                 if (onPartyEnd != null)
                     onPartyEnd.Invoke();
                 return;
             }
             currentID++;
-            activePlayer = players[currentID];
+            ActivePlayer = players[currentID];
         }
         /// <summary>
         /// Function to be able to create a player and add it to a party
@@ -62,12 +63,12 @@ namespace CombatForms
             if (players.Count <= currentID)
             {
                 players.Add(p);
-                activePlayer = players[currentID];
-                p.onEndTurn += GetNext;
+                ActivePlayer = players[currentID];
+                p.onEndTurn += SetNextPlayer;
                 return;
             }
             players.Add(p);
-            p.onEndTurn += GetNext;
+            p.onEndTurn += SetNextPlayer;
             Sort();
         }
         /// <summary>

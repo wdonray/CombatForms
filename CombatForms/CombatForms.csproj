@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Combat.cs" />
+    <Compile Include="CombatVariables.cs" />
     <Compile Include="DataMananger.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

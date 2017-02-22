@@ -17,7 +17,6 @@ namespace CombatForms
         public State CurrentState { get; set; }
         [XmlElement(ElementName = "PlayerFSM")]
         public FiniteStateMachine<PlayerStates> fsm;
-
         public enum EType
         {
             PLAYER,
@@ -62,9 +61,9 @@ namespace CombatForms
                     d.TakeDamage(damage);
                     Combat.Instance.combatLog += this.Name + " is attacking and CRIT "
                          + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
-                    Combat.Instance.activeParty.activePlayer.AddExp(level.Next(25, 71));
-                    if (Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
-                        Combat.Instance.activeParty.activePlayer.levelUp();
+                    Combat.Instance.CV.ActiveParty.ActivePlayer.AddExp(level.Next(25, 71));
+                    if (Combat.Instance.CV.ActiveParty.ActivePlayer.Exp >= Combat.Instance.CV.ActiveParty.ActivePlayer.MaxExp)
+                        Combat.Instance.CV.ActiveParty.ActivePlayer.levelUp();
                 }
 
                 else
@@ -72,9 +71,9 @@ namespace CombatForms
                     d.TakeDamage(damage);
                     Combat.Instance.combatLog += this.Name + " is attacking "
                         + (d as Entity).Name + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
-                    Combat.Instance.activeParty.activePlayer.AddExp(level.Next(20, 51));
-                    if (Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
-                        Combat.Instance.activeParty.activePlayer.levelUp();
+                    Combat.Instance.CV.ActiveParty.ActivePlayer.AddExp(level.Next(20, 51));
+                    if (Combat.Instance.CV.ActiveParty.ActivePlayer.Exp >= Combat.Instance.CV.ActiveParty.ActivePlayer.MaxExp)
+                        Combat.Instance.CV.ActiveParty.ActivePlayer.levelUp();
                 }
             }
             else if (d.isBlocking == true)
@@ -84,9 +83,9 @@ namespace CombatForms
                 Combat.Instance.combatLog += this.Name + " is attacking "
                    + (d as Entity).Name + "(Blocked half the damage)" + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
                 d.isBlocking = false;
-                Combat.Instance.activeParty.activePlayer.AddExp(level.Next(15, 31));
-                if (Combat.Instance.activeParty.activePlayer.Exp >= Combat.Instance.activeParty.activePlayer.MaxExp)
-                    Combat.Instance.activeParty.activePlayer.levelUp();
+                Combat.Instance.CV.ActiveParty.ActivePlayer.AddExp(level.Next(15, 31));
+                if (Combat.Instance.CV.ActiveParty.ActivePlayer.Exp >= Combat.Instance.CV.ActiveParty.ActivePlayer.MaxExp)
+                    Combat.Instance.CV.ActiveParty.ActivePlayer.levelUp();
             }
         }
         /// <summary>
@@ -125,23 +124,23 @@ namespace CombatForms
                 return;
             CurrentState = fsm.GetState();
             Random random = new Random();
-            int targetP = random.Next(0, (Combat.Instance.playerParty.members.Count));
-            int targetE = random.Next(0, (Combat.Instance.enemyParty.members.Count));
-            if (this.eType == EType.ENEMY && Combat.Instance.activeParty.activePlayer.Alive == true)
+            int targetP = random.Next(0, (Combat.Instance.CV.PlayerParty.members.Count));
+            int targetE = random.Next(0, (Combat.Instance.CV.EnemyParty.members.Count));
+            if (this.eType == EType.ENEMY && Combat.Instance.CV.ActiveParty.ActivePlayer.Alive == true)
             {
                 do
                 {
-                    targetP = random.Next(0, (Combat.Instance.playerParty.members.Count));
-                } while (Combat.Instance.playerParty.members[targetP].Alive == false);
-                DoDamage(Combat.Instance.playerParty.members[targetP]);
+                    targetP = random.Next(0, (Combat.Instance.CV.PlayerParty.members.Count));
+                } while (Combat.Instance.CV.PlayerParty.members[targetP].Alive == false);
+                DoDamage(Combat.Instance.CV.PlayerParty.members[targetP]);
             }
-            else if (this.eType == EType.PLAYER && Combat.Instance.activeParty.activePlayer.Alive == true)
+            else if (this.eType == EType.PLAYER && Combat.Instance.CV.ActiveParty.ActivePlayer.Alive == true)
             {
                 do
                 {
-                    targetE = random.Next(0, (Combat.Instance.enemyParty.members.Count));
-                } while (Combat.Instance.enemyParty.members[targetE].Alive == false);
-                DoDamage(Combat.Instance.enemyParty.members[targetE]);
+                    targetE = random.Next(0, (Combat.Instance.CV.EnemyParty.members.Count));
+                } while (Combat.Instance.CV.EnemyParty.members[targetE].Alive == false);
+                DoDamage(Combat.Instance.CV.EnemyParty.members[targetE]);
             }
         }
         /// <summary>
@@ -152,10 +151,10 @@ namespace CombatForms
             if (fsm.ChangeState(PlayerStates.FLEE) == false)
                 return;
             CurrentState = fsm.GetState();
-            Combat.Instance.activeParty.activePlayer.Alive = false;
-            if (Combat.Instance.activeParty.activePlayer.Alive == false)
+            Combat.Instance.CV.ActiveParty.ActivePlayer.Alive = false;
+            if (Combat.Instance.CV.ActiveParty.ActivePlayer.Alive == false)
             {
-                Combat.Instance.activeParty.activePlayer.Health = 0;
+                Combat.Instance.CV.ActiveParty.ActivePlayer.Health = 0;
                 Combat.Instance.combatLog += this.Name + " has died" + Environment.NewLine + Space + Environment.NewLine;
             }
         }
@@ -167,7 +166,7 @@ namespace CombatForms
             if (fsm.ChangeState(PlayerStates.DEFEND) == false)
                 return;
             CurrentState = fsm.GetState();
-            Combat.Instance.activeParty.activePlayer.isBlocking = true;
+            Combat.Instance.CV.ActiveParty.ActivePlayer.isBlocking = true;
             Combat.Instance.combatLog += this.Name + " prepared a block! " + Environment.NewLine + Space + Environment.NewLine;
         }
         /// <summary>
