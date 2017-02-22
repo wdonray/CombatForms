@@ -52,6 +52,7 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.Restart = new System.Windows.Forms.Button();
+            this.richTextBox6 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -283,12 +284,23 @@
             this.Restart.UseVisualStyleBackColor = true;
             this.Restart.Click += new System.EventHandler(this.Restart_Click);
             // 
+            // richTextBox6
+            // 
+            this.richTextBox6.Font = new System.Drawing.Font("Monotype Corsiva", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox6.Location = new System.Drawing.Point(66, 12);
+            this.richTextBox6.Name = "richTextBox6";
+            this.richTextBox6.ReadOnly = true;
+            this.richTextBox6.Size = new System.Drawing.Size(766, 59);
+            this.richTextBox6.TabIndex = 25;
+            this.richTextBox6.Text = resources.GetString("richTextBox6.Text");
+            // 
             // WaterEmblem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1264, 682);
+            this.Controls.Add(this.richTextBox6);
             this.Controls.Add(this.Restart);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
@@ -346,6 +358,7 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button Restart;
+        private System.Windows.Forms.RichTextBox richTextBox6;
     }
 }
 
