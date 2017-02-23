@@ -111,7 +111,7 @@ namespace CombatForms
         #endregion
         private void Attack_Click(object sender, EventArgs e)
         {
-            Combat.Instance.CV.ActiveParty.ActivePlayer.Attack();
+            Combat.Instance.CV.ActivePlayer.Attack();
             button1.Enabled = false;
             button3.Enabled = false;
             button6.Enabled = false;
@@ -121,7 +121,7 @@ namespace CombatForms
         }
         private void EndTurn_Click(object sender, EventArgs e)
         {
-            Combat.Instance.CV.ActiveParty.ActivePlayer.EndTurn();
+            Combat.Instance.CV.ActivePlayer.EndTurn();
             button1.Enabled = true;
             button6.Enabled = true;
             button3.Enabled = true;
@@ -130,7 +130,7 @@ namespace CombatForms
         }
         private void Defend_Click(object sender, EventArgs e)
         {
-            Combat.Instance.CV.ActiveParty.ActivePlayer.Defend();
+            Combat.Instance.CV.ActivePlayer.Defend();
             button1.Enabled = false;
             button3.Enabled = false;
             button6.Enabled = false;
@@ -140,13 +140,13 @@ namespace CombatForms
         }
         private void Flee_Click(object sender, EventArgs e)
         {
-            Combat.Instance.CV.ActiveParty.ActivePlayer.Flee();
+            Combat.Instance.CV.ActivePlayer.Flee();
             button1.Enabled = false;
             button3.Enabled = false;
             button6.Enabled = false;
             button2.Enabled = true;
             UpdateHud();
-            MessageBox.Show(Combat.Instance.CV.ActiveParty.ActivePlayer.Name + " has chosen to leave the battle!");
+            MessageBox.Show(Combat.Instance.CV.ActivePlayer.Name + " has chosen to leave the battle!");
             EndTurn_Click(sender, e);
         }
         private void Options_Click(object sender, EventArgs e)
