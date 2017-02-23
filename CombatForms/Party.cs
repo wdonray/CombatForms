@@ -12,11 +12,9 @@ namespace CombatForms
     public class Party
     {
         public Party() { }
-        public Party(List<Entity> entities)
-        {
-            players = entities;
-        }
+
         public int currentID = 0;
+
         [XmlElement(ElementName = "ActivePlayer")]
         public Entity ActivePlayer;
         
@@ -25,6 +23,7 @@ namespace CombatForms
         public delegate void OnPartyEnd();
         [XmlIgnore]
         public OnPartyEnd onPartyEnd;
+
         [XmlElement(ElementName = "Members")]
         public List<Entity> members
         {

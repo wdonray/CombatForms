@@ -199,7 +199,7 @@ namespace CombatForms
         public bool Alive
         {
             get;
-            private set;
+            set;
         }
         /// <summary>
         /// The representation if the Entity is blocking.
@@ -216,7 +216,7 @@ namespace CombatForms
         public float Health
         {
             get;
-            private set;
+            set;
         }
         /// <summary>
         /// The representation of an Entities string name.
@@ -224,7 +224,7 @@ namespace CombatForms
         public string Name
         {
             get;
-            private set;
+            set;
         }
         /// <summary>
         /// The representation of an Entities Speed.
@@ -233,7 +233,7 @@ namespace CombatForms
         public float Speed
         {
             get;
-            private set;
+            set;
         }
         /// <summary>
         /// The representation of an Entities Exp.

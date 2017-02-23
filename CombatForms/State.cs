@@ -28,7 +28,7 @@ namespace CombatForms
         public string Name
         {
             get;
-            private set;
+            set;
         }
         /// <summary>
         /// Overriding the ToString to return a name
