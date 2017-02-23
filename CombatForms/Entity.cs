@@ -29,16 +29,16 @@ namespace CombatForms
             fsm = f;
             fsm.Start(PlayerStates.INIT);
             CurrentState = fsm.currentState;
-            m_Health = health;
-            m_Name = name;
-            m_Alive = alive;
-            m_Speed = speed;
-            m_Block = block;
+            Health = health;
+            Name = name;
+            Alive = alive;
+            Speed = speed;
+            IsBlocking = block;
             eType = e;
-            m_Level = 1;
-            m_Exp = 0;
-            m_MaxExp = 50;
-            m_MaxHealth = 100;
+            LevelUp = 1;
+            Exp = 0;
+            MaxExp = 50;
+            MaxHealth = 100;
         }
         public string Space = "-------------------------------------------------------------";
         /// <summary>
@@ -51,7 +51,7 @@ namespace CombatForms
             Random rand = new Random();
             Random crit = new Random();
             float damage = rand.Next(10, 16);
-            if (d.isBlocking == false)
+            if (d.IsBlocking == false)
             {
                 float critChance = crit.Next(1, 101);
                 //Added a crit chance of 15%
@@ -76,13 +76,13 @@ namespace CombatForms
                         Combat.Instance.CV.ActiveParty.ActivePlayer.levelUp();
                 }
             }
-            else if (d.isBlocking == true)
+            else if (d.IsBlocking == true)
             {
                 damage = damage / 2;
                 d.TakeDamage(damage);
                 Combat.Instance.combatLog += this.Name + " is attacking "
                    + (d as Entity).Name + "(Blocked half the damage)" + " for " + damage.ToString() + " damage!" + Environment.NewLine + Space + Environment.NewLine;
-                d.isBlocking = false;
+                d.IsBlocking = false;
                 Combat.Instance.CV.ActiveParty.ActivePlayer.AddExp(level.Next(15, 31));
                 if (Combat.Instance.CV.ActiveParty.ActivePlayer.Exp >= Combat.Instance.CV.ActiveParty.ActivePlayer.MaxExp)
                     Combat.Instance.CV.ActiveParty.ActivePlayer.levelUp();
@@ -94,11 +94,11 @@ namespace CombatForms
         /// <param name="f"></param>
         public void TakeDamage(float f)
         {
-            m_Health -= f;
-            if (m_Health <= 0)
+            Health -= f;
+            if (Health <= 0)
             {
-                m_Alive = false;
-                m_Health = 0;
+                Alive = false;
+                Health = 0;
                 Combat.Instance.combatLog += this.Name + " has died" + Environment.NewLine + Space + Environment.NewLine;
             }
         }
@@ -166,7 +166,7 @@ namespace CombatForms
             if (fsm.ChangeState(PlayerStates.DEFEND) == false)
                 return;
             CurrentState = fsm.GetState();
-            Combat.Instance.CV.ActiveParty.ActivePlayer.isBlocking = true;
+            Combat.Instance.CV.ActiveParty.ActivePlayer.IsBlocking = true;
             Combat.Instance.combatLog += this.Name + " prepared a block! " + Environment.NewLine + Space + Environment.NewLine;
         }
         /// <summary>
@@ -174,41 +174,99 @@ namespace CombatForms
         /// </summary>
         public void levelUp()
         {
-            m_Level++;
-            m_Speed++;
-            m_Exp -= (int)m_MaxExp;
-            m_MaxExp = (int)(Math.Pow((double)50, (double)(m_Level + 2) / (double)5) + (double)50);
-            m_MaxHealth = (int)(Math.Pow((double)100, (double)(m_Level + 1) / (double)5) + (double)100);
-            m_Health += 10;
+            LevelUp++;
+            Speed++;
+            Exp -= (int)MaxExp;
+            MaxExp = (int)(Math.Pow((double)50, (double)(LevelUp + 2) / (double)5) + (double)50);
+            MaxHealth = (int)(Math.Pow((double)100, (double)(LevelUp + 1) / (double)5) + (double)100);
+            Health += 10;
         }
         /// <summary>
         /// Function to add desired exp to my current interger
         /// </summary>
-        /// <param name="Exp"></param>
-        public void AddExp(int Exp)
+        /// <param name="E"></param>
+        public void AddExp(int E)
         {
-            m_Exp += Exp;
+            Exp += E;
         }
-        public int m_Exp;
-        public int m_MaxExp;
-        public int m_Level;
-        private float m_Health;
-        public int m_MaxHealth;
-        private string m_Name;
-        private bool m_Alive;
-        private float m_Speed;
-        private bool m_Block;
+
         public delegate void Handler();
         [XmlIgnore]
         public Handler onEndTurn;
-        public bool Alive { get { return m_Alive; } set { m_Alive = value; } }
-        public bool isBlocking { get { return m_Block; } set { m_Block = value; } }
-        public float Health { get { return m_Health; } set { m_Health = value; } }
-        public string Name { get { return m_Name; } set { m_Name = value; } }
-        public float Speed { get { return m_Speed; } }
-        public int Exp { get { return m_Exp; } }
-        public int MaxExp { get { return m_MaxExp; } }
-        public int LevelUp { get { return m_Level; } }
-        public int MaxHealth { get { return m_MaxHealth; } }
+        /// <summary>
+        /// The representaion if the Entitie is alive.
+        /// </summary>
+        public bool Alive
+        {
+            get;
+            private set;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsBlocking
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// The represenation of an Entities Life Total.
+        /// If that life total ever gets less than zero we got a problem or dude is dead.
+        /// </summary>
+        public float Health
+        {
+            get;
+            private set;
+        }
+        /// <summary>
+        /// The representation of an Entities string name.
+        /// </summary>
+        public string Name
+        {
+            get;
+            private set;
+        }
+        /// <summary>
+        /// The representation of an Entities Speed.
+        /// Using this to sort the Entities in order.
+        /// </summary>
+        public float Speed
+        {
+            get;
+            private set;
+        }
+        /// <summary>
+        /// The representation of an Entities Exp.
+        /// If reaches the Max EXP reset it to 0.
+        /// </summary>
+        public int Exp
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// Using the leveling algorithm changes as it reaches 100%.
+        /// </summary>
+        public int MaxExp
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// Used in the leveling alogrithm
+        /// </summary>
+        public int LevelUp
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// Using the leveling algorithm changes as it reaches 100%.
+        /// </summary>
+        public int MaxHealth
+        {
+            get;
+            set;
+        }
     }
 }

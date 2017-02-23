@@ -68,6 +68,9 @@ namespace CombatForms
             CV.EnemyParty.AddPlayer(e);
             CV.CombatPartyMembers.Add(e);
         }
+        /// <summary>
+        /// Clears all of the parties
+        /// </summary>
         public void Reset()
         {
             CV.CombatPartyMembers.Clear();
