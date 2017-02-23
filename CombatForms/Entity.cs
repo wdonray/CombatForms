@@ -194,7 +194,7 @@ namespace CombatForms
         [XmlIgnore]
         public Handler onEndTurn;
         /// <summary>
-        /// The representaion if the Entitie is alive.
+        /// The representaion if the Entity is alive.
         /// </summary>
         public bool Alive
         {
@@ -202,7 +202,7 @@ namespace CombatForms
             private set;
         }
         /// <summary>
-        /// The representation if the Entitie is blocking.
+        /// The representation if the Entity is blocking.
         /// </summary>
         public bool IsBlocking
         {
@@ -253,7 +253,7 @@ namespace CombatForms
             set;
         }
         /// <summary>
-        /// Used in the leveling alogrithm
+        /// Used in the leveling algorithm
         /// </summary>
         public int LevelUp
         {
