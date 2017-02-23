@@ -202,7 +202,7 @@ namespace CombatForms
             private set;
         }
         /// <summary>
-        /// 
+        /// The representation if the Entitie is blocking.
         /// </summary>
         public bool IsBlocking
         {
