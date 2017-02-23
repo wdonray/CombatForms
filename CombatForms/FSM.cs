@@ -37,7 +37,7 @@ namespace CombatForms
             states.Add(s.Name, s);
         }
         /// <summary>
-        /// Creates a state and adds a key and value to it
+        /// Adds a state and value to it
         /// </summary>
         /// <param name="s">the state to add</param>
         public void AddState(State s)
@@ -46,7 +46,7 @@ namespace CombatForms
             states.Add(s.Name, s);
         }
         /// <summary>
-        /// Splits each state in the transtition so we are able to keep track of each state so we can rebuild it 
+        /// Splits each state in the transition so we are able to keep track of each state so we can rebuild it 
         /// </summary>
         public void RebuildFSM()
         {
@@ -96,7 +96,7 @@ namespace CombatForms
             return true;
         }
         /// <summary>
-        /// Takes in a state and sets it as the current state
+        /// Takes in a generic type and sets it as the current state
         /// </summary>
         /// <param name="state"></param>
         public void Start<V>(V state)
@@ -108,7 +108,7 @@ namespace CombatForms
                 currentState = states.ElementAt(0).Value;
         }
         /// <summary>
-        /// 
+        /// Takes in a State and sets it as the current state 
         /// </summary>
         /// <param name="s"></param>
         public void Start(State s)
@@ -117,7 +117,7 @@ namespace CombatForms
                 currentState = states[s.Name];
         }
         /// <summary>
-        /// Sets the current state to the next state and invokes the exit and enter
+        /// Takes in a generic type and sets the current state to the next state and invokes the exit and enter
         /// </summary>
         /// <param name="state"></param>
         public bool ChangeState<V>(V state)

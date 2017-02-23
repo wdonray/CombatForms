@@ -38,7 +38,8 @@ namespace CombatForms
             }
         }
         /// <summary>
-        /// Function to set the next player in the list to be the active player
+        /// Function to set the next player in the list to be 
+        /// the active player
         /// </summary>
         public void SetNextPlayer()
         {

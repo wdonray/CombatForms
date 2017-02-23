@@ -20,22 +20,23 @@ namespace CombatForms
         {
             onEnter = null;
             onExit = null;
-            m_name = e.ToString();  
+            Name = e.ToString();  
         }
-        private string m_name;
+        /// <summary>
+        /// Used to represent the State name
+        /// </summary>
         public string Name
         {
-            get { return m_name; }
-            set { m_name = value; }
+            get;
+            private set;
         }
-        public override string ToString() { return m_name; }
-        public void AddEnter(Delegate d)
+        /// <summary>
+        /// Overriding the ToString to return a name
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
         {
-            onEnter += d as Handler;
-        }
-        public void AddExit(Delegate d)
-        {
-            onExit += d as Handler;
+            return Name;
         }
     }
 }
